@@ -4,7 +4,7 @@ namespace EwalletMobileApp.MVVM.Models;
 
 public class Budget : BaseEntity
 {   
-    public decimal Total { get; set; }
+    public double Total { get; set; }
 
     [OneToMany(CascadeOperations = CascadeOperation.All)]
     public ICollection<Expense>? Expenses { get; set; }

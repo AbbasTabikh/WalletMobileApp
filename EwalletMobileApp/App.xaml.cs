@@ -1,4 +1,6 @@
-﻿namespace EwalletMobileApp
+﻿using SQLite;
+
+namespace EwalletMobileApp
 {
     public partial class App : Application
     {
