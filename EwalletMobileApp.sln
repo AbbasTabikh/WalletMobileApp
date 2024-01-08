@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EwalletMobileApp", "EwalletMobileApp\EwalletMobileApp.csproj", "{EFA67F75-2C98-4EF7-B110-7E7BBF55FDDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EwalletMobileApp", "EwalletMobileApp\EwalletMobileApp.csproj", "{EFA67F75-2C98-4EF7-B110-7E7BBF55FDDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcrylicView", "..\..\..\Downloads\Compressed\AcrylicView.MAUI-master\AcrylicView\AcrylicView.csproj", "{07EFAE9B-2697-4F24-B8C1-A14B2974B5FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{EFA67F75-2C98-4EF7-B110-7E7BBF55FDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFA67F75-2C98-4EF7-B110-7E7BBF55FDDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EFA67F75-2C98-4EF7-B110-7E7BBF55FDDA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{07EFAE9B-2697-4F24-B8C1-A14B2974B5FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07EFAE9B-2697-4F24-B8C1-A14B2974B5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07EFAE9B-2697-4F24-B8C1-A14B2974B5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07EFAE9B-2697-4F24-B8C1-A14B2974B5FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

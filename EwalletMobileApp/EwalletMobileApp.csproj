@@ -69,15 +69,19 @@
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\BudgetsView.xaml.cs">
-	    <DependentUpon>BudgetsView.xaml</DependentUpon>
-	  </Compile>
+	  <ProjectReference Include="..\..\..\..\Downloads\Compressed\AcrylicView.MAUI-master\AcrylicView\AcrylicView.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="MVVM\Views\BudgetsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\SingleBudgetView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\ButtonStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

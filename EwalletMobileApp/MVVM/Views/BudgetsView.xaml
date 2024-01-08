@@ -1,9 +1,122 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EwalletMobileApp.MVVM.Views.NewPage1"
-             Title="NewPage1">
+             xmlns:viewModels="clr-namespace:EwalletMobileApp.MVVM.ViewModels"
+             x:Class="EwalletMobileApp.MVVM.Views.BudgetsView"
+             x:DataType="viewModels:BudgetsViewModel"
+             xmlns:helpers="clr-namespace:EwalletMobileApp.Helpers">
 
-    
-    
+    <ContentPage.Resources>
+
+        <Shadow Brush="{StaticResource Primary}"
+        x:Key="Shadow"
+        Offset="0,0"
+        Radius="10"
+        Opacity="0.8" />
+
+        <DataTemplate x:Key="budgetCollectionView">
+            <Grid ColumnDefinitions="*,*" RowDefinitions="*">
+                <Frame BackgroundColor="Red" Grid.ColumnSpan="2" HeightRequest="33" CornerRadius="5"/>
+                <Label Text="{Binding CreationDate, StringFormat='{0:MM/dd/yyyy}'}" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Margin="12" TextColor="White" FontSize="12" Grid.Column="0"/>
+                <Label Text="{Binding Total}" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Margin="12" TextColor="White" FontSize="12" Grid.Column="1"/>
+            </Grid>
+        </DataTemplate>
+
+        <Style TargetType="Button" x:Key="GlowingCircularButton">
+            <Setter Property="Background" Value="{StaticResource Primary}"/>
+            <Setter Property="Shadow" Value="{StaticResource Shadow}"/>
+            <Setter Property="WidthRequest" Value="40"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="CornerRadius" Value="50"/>
+            <Setter Property="FontAutoScalingEnabled" Value="True"/>
+        </Style>
+
+
+    </ContentPage.Resources>
+
+
+
+    <Grid x:Name="Container" BackgroundColor="{StaticResource BgColor}">
+        
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".34*" />
+            <RowDefinition Height=".66*" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Source="top_bg.png" Aspect="Fill"/>
+
+        <Grid Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <HorizontalStackLayout Grid.Row="0" HeightRequest="35" Grid.Column="0">
+                    <Image Source="dotnet_bot.png" HeightRequest="35"></Image>
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label Text="Welcome back!" FontSize="10"></Label>
+                        <Label Text="Hussein Attar"></Label>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+
+                <Button Background="Transparent" HorizontalOptions="End" Grid.Column="1">
+                    <Button.ImageSource>
+                        <FontImageSource
+                        FontFamily="icomoon"
+                        Glyph="{x:Static helpers:IconFont.Bell}"
+                        Size="15" Color="Black"/>
+                    </Button.ImageSource>
+                </Button>
+            </Grid>
+        </Grid>
+
+
+        <Frame Grid.Row="1" Grid.RowSpan="2" Margin="15,-45,15,0">
+            <Grid RowDefinitions="auto,auto,auto,*" ColumnDefinitions="auto,*">
+                <Label Text="budget A" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
+                <Label Text="20.00$" Grid.Row="1" FontSize="22" Grid.Column="0" TextColor="Black"/>
+
+                <Button Style="{StaticResource GlowingCircularButton}"
+                        Grid.Column="1" 
+                        Grid.Row="0" 
+                        Grid.RowSpan="2" 
+                        Command="{Binding BudgetSelectedCommand}"
+                        VerticalOptions="Center"                         
+                        HorizontalOptions="End">
+                    <Button.ImageSource >
+                        <FontImageSource   
+                         FontFamily="icomoon"
+                         Glyph="{x:Static helpers:IconFont.plus5}"
+                         Color="white"
+                            Size="18"/>
+                    </Button.ImageSource>
+                </Button>
+
+                <Label Text="List of budgets:" 
+                       TextColor="Black" 
+                       Grid.Row="2" 
+                       Margin="0,25,0,10"/>
+                <Label  HorizontalTextAlignment="End" 
+                        HorizontalOptions="End" 
+                        FontFamily="icomoon"
+                        VerticalTextAlignment="Center"
+                        Text="{x:Static helpers:IconFont.Trash}"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Margin="0,25,5,10"/>
+
+                <ScrollView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                    <CollectionView ItemTemplate="{StaticResource budgetCollectionView}" 
+                                    ItemsSource="{Binding Budgets}" 
+                                    SelectionChangedCommand="{Binding BudgetSelectedCommand}">
+                    </CollectionView>
+                </ScrollView>
+            </Grid>
+        </Frame>
+    </Grid>
+
+
+
 </ContentPage>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EwalletMobileApp.MVVM.Views.SingleBudgetView"
+             Title="SingleBudgetView">
+    <VerticalStackLayout>
+        <Label 
+            Text="Single aksjdhaslkdaskjhdas "
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

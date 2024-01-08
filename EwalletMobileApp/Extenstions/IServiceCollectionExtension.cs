@@ -26,8 +26,10 @@ namespace EwalletMobileApp.Extenstions
             servicesDescriptor.AddSingleton<IUnitOfWork, UnitOfWork>();
             servicesDescriptor.AddSingleton<IExpenseService, ExpenseService>();
             servicesDescriptor.AddSingleton<IBudgetService, BudgetService>();
+            servicesDescriptor.AddSingleton<INavigationService, NavigationService>();
 
             return servicesDescriptor;
         }
+
     }
 }

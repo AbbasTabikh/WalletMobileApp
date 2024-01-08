@@ -2,50 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EwalletMobileApp.MainPage"
-             xmlns:helpers="clr-namespace:EwalletMobileApp.Helpers"
+             xmlns:acrylic="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
              Shell.NavBarIsVisible="False">
-
-    <ContentPage.Resources>
-        <Color x:Key="BgColor">#131313</Color>
-        <Color x:Key="Primary">#4c4aef</Color>
-        <Color x:Key="Secondary">#bcbbf9</Color>
-    </ContentPage.Resources>
-
-
-
-    <Grid x:Name="Container" BackgroundColor="{StaticResource BgColor}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.35*" />
-            <RowDefinition Height="0.65*" />
-        </Grid.RowDefinitions>
-
-        <!-- Nested Grid for the first row -->
-        <Grid Grid.Row="0">
-            <Image Source="top_bg.png" Aspect="Fill" BackgroundColor="#131313"></Image>
-            <Grid HorizontalOptions="FillAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <HorizontalStackLayout HeightRequest="35" Grid.Column="0">
-                    <Image Source="dotnet_bot.png" HeightRequest="35"></Image>
-                    <VerticalStackLayout HorizontalOptions="Center">
-                        <Label Text="Welcome back!" FontSize="10"></Label>
-                        <Label Text="Hussein Attar"></Label>
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
-
-                <Button Background="Transparent" HorizontalOptions="End" Grid.Column="1">
-                    <Button.ImageSource>
-                        <FontImageSource
-                        FontFamily="icomoon"
-                        Glyph="{x:Static helpers:IconFont.Bell}"
-                        Size="15" Color="Black"/>
-                    </Button.ImageSource>
-                </Button>
-            </Grid>
-        </Grid>
-    </Grid>
 
 </ContentPage>
