@@ -2,7 +2,6 @@
 using EwalletMobileApp.MVVM.ViewModels;
 using EwalletMobileApp.MVVM.Views;
 using Microsoft.Extensions.Logging;
-using Xe.AcrylicView;
 
 namespace EwalletMobileApp
 {
@@ -13,7 +12,6 @@ namespace EwalletMobileApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseAcrylicView()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
