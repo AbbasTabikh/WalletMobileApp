@@ -24,6 +24,7 @@ namespace EwalletMobileApp
 
             builder.Services.AddTransient<BudgetsView>();
             builder.Services.AddTransient<BudgetsViewModel>();
+
             builder.Services.AddTransient<SingleBudgetView>();
             builder.Services.AddTransient<SingleBudgetViewModel>();
             

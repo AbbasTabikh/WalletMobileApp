@@ -20,6 +20,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
             [
                 new Expense
                 {
+                    Price = 26236.22,
                     ID = 1,
                     CreationDate = DateTime.Now,
                     Category = Category.Education,
@@ -27,6 +28,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
                 },
                 new Expense
                 {
+                    Price = 26236,
                     ID = 2,
                     CreationDate = DateTime.Now,
                     Category = Category.Transportation,
@@ -34,6 +36,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
                 },
                 new Expense
                 {
+                    Price = 26236,
                     Name = "Expense Name",
                     ID = 3,
                     CreationDate = DateTime.Now,
@@ -41,21 +44,21 @@ namespace EwalletMobileApp.MVVM.ViewModels
                 },new Expense
                 {
                     Name = "Expense Name",
-
+                    Price = 26236,
                     ID = 4,
                     CreationDate = DateTime.Now,
                     Category = Category.Transportation
                 },new Expense
                 {
                     Name = "Expense Name",
-
+                    Price = 26236.23,
                     ID = 5,
                     CreationDate = DateTime.Now,
                     Category = Category.Other
                 },new Expense
                 {
                     Name = "Expense Name",
-
+                    Price = 26236,
                     ID = 6,
                     CreationDate = DateTime.Now,
                     Category = Category.Savings
