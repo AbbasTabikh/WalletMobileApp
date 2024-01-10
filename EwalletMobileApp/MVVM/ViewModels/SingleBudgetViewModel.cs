@@ -1,5 +1,7 @@
 ﻿using EwalletMobileApp.Enums;
 using EwalletMobileApp.MVVM.Models;
+using EwalletMobileApp.MVVM.Views;
+using EwalletMobileApp.Services.Factories;
 using EwalletMobileApp.Services.Interfaces;
 using System.Collections.ObjectModel;
 
@@ -14,6 +16,10 @@ namespace EwalletMobileApp.MVVM.ViewModels
             Expenses = AddDummyData();
         }
 
+        private Task OpenDialogue()
+        {
+            var dialogue = DialogueFactory.CreateInstance<ExpenseDialogue>();
+        }
         private ObservableCollection<Expense> AddDummyData()
         {
             return
@@ -41,21 +47,24 @@ namespace EwalletMobileApp.MVVM.ViewModels
                     ID = 3,
                     CreationDate = DateTime.Now,
                     Category = Category.Transportation
-                },new Expense
+                },
+                new Expense
                 {
                     Name = "Expense Name",
                     Price = 26236,
                     ID = 4,
                     CreationDate = DateTime.Now,
                     Category = Category.Transportation
-                },new Expense
+                },
+                new Expense
                 {
                     Name = "Expense Name",
                     Price = 26236.23,
                     ID = 5,
                     CreationDate = DateTime.Now,
                     Category = Category.Other
-                },new Expense
+                },
+                new Expense
                 {
                     Name = "Expense Name",
                     Price = 26236,

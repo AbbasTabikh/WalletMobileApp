@@ -28,6 +28,8 @@ namespace EwalletMobileApp.Extenstions
             servicesDescriptor.AddSingleton<IBudgetService, BudgetService>();
             servicesDescriptor.AddSingleton<INavigationService, NavigationService>();
 
+            servicesDescriptor.AddTransient<IDialogueService, DialogueService>();
+
             return servicesDescriptor;
         }
 

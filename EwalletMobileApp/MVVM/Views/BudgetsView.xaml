@@ -53,7 +53,7 @@
                 </Grid.ColumnDefinitions>
 
                 <HorizontalStackLayout Grid.Row="0" HeightRequest="35" Grid.Column="0">
-                    <Image Source="dotnet_bot.png" HeightRequest="35"></Image>
+                    <Image Source="star.png" HeightRequest="35"></Image>
                     <VerticalStackLayout HorizontalOptions="Center">
                         <Label Text="Welcome back!" FontSize="10"></Label>
                         <Label Text="Hussein Attar"></Label>

@@ -58,10 +58,12 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\icomoon.ttf" />
+	  <None Remove="Resources\Images\star.png" />
 	  <None Remove="Resources\Images\top_bg.svg" />
 	</ItemGroup>
 	
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -72,6 +74,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="MVVM\Views\BudgetsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\ExpenseDialogue.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\SingleBudgetView.xaml">

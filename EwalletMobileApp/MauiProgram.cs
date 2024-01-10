@@ -1,4 +1,5 @@
-﻿using EwalletMobileApp.Extenstions;
+﻿using CommunityToolkit.Maui;
+using EwalletMobileApp.Extenstions;
 using EwalletMobileApp.MVVM.ViewModels;
 using EwalletMobileApp.MVVM.Views;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace EwalletMobileApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -27,11 +29,11 @@ namespace EwalletMobileApp
 
             builder.Services.AddTransient<SingleBudgetView>();
             builder.Services.AddTransient<SingleBudgetViewModel>();
-            
-            
+
+
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
