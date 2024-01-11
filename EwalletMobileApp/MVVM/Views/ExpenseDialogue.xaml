@@ -4,10 +4,48 @@
              x:Class="EwalletMobileApp.MVVM.Views.ExpenseDialogue"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              CanBeDismissedByTappingOutsideOfPopup="True">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    
+    <Frame BackgroundColor="{StaticResource Dark}" MinimumWidthRequest="250" MinimumHeightRequest="320">
+        <Grid RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="5" Padding="12">
+            <Label Grid.Row="0" Text="Add Expense" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
+
+            <VerticalStackLayout Grid.Row="1">
+                <Label Text="Name" Padding="3" 
+                       TextColor="{StaticResource Light}"/>
+                <Entry Placeholder="Name" 
+                       TextColor="{StaticResource White}"  
+                       BackgroundColor="#191B1E" 
+                       PlaceholderColor="{StaticResource LightDark}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="2">
+                <Label Text="Category" 
+                       Padding="3" 
+                       TextColor="{StaticResource Light}"/>
+                <Entry Placeholder="Name" 
+                       TextColor="{StaticResource White}" 
+                       BackgroundColor="#191B1E" 
+                       PlaceholderColor="{StaticResource LightDark}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="3">
+                <Label Text="Price" 
+                       Padding="3" 
+                       TextColor="{StaticResource Light}"/>
+                <Entry Placeholder="Name" 
+                       TextColor="{StaticResource White}"
+                       BackgroundColor="#191B1E" 
+                      PlaceholderColor="{StaticResource LightDark}"/>
+            </VerticalStackLayout>
+
+            <Button Text="Save"
+                    Grid.Row="4" 
+                    CornerRadius="5" 
+                    Margin="0,5,0,5" 
+                    Padding="5" 
+                    BackgroundColor="{StaticResource Primary}" 
+                    TextColor="White"/>
+
+        </Grid>
+    </Frame>
 </toolkit:Popup>

@@ -9,6 +9,9 @@
     <Color x:Key="BgColor">#131313</Color>
     <Color x:Key="Primary">#4C4AEF</Color>
     <Color x:Key="Secondary">#bcbbf9</Color>
+    <Color x:Key="Dark">#161616</Color>
+    <Color x:Key="Light">#B4B4B4</Color>
+    <Color x:Key="LightDark">#363636</Color> 
     
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>

@@ -1,6 +1,6 @@
 ﻿using EwalletMobileApp.MVVM.ViewModels;
 using EwalletMobileApp.MVVM.Views;
-using SQLite;
+using EwalletMobileApp.Services;
 
 namespace EwalletMobileApp
 {
@@ -10,7 +10,7 @@ namespace EwalletMobileApp
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new SingleBudgetView(new SingleBudgetViewModel(new NavigationService(), new DialogueService()));
         }
     }
 }

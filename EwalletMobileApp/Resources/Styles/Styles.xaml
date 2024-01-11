@@ -112,6 +112,13 @@
         <Setter Property="CornerRadius" Value="8" />
     </Style>
 
+    <Shadow Brush="{StaticResource Primary}"
+        x:Key="Shadow"
+        Offset="0,0"
+        Radius="10"
+        Opacity="0.8" />
+
+
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />

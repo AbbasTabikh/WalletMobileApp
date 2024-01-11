@@ -3,6 +3,7 @@ using EwalletMobileApp.Extenstions;
 using EwalletMobileApp.MVVM.ViewModels;
 using EwalletMobileApp.MVVM.Views;
 using Microsoft.Extensions.Logging;
+using UraniumUI;
 
 namespace EwalletMobileApp
 {
@@ -13,6 +14,8 @@ namespace EwalletMobileApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseUraniumUI()
+                .UseUraniumUIMaterial()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
