@@ -9,7 +9,7 @@ namespace EwalletMobileApp
         public App()
         {
             InitializeComponent();
-
+            Current!.UserAppTheme = AppTheme.Dark;
             MainPage = new SingleBudgetView(new SingleBudgetViewModel(new NavigationService(), new DialogueService()));
         }
     }

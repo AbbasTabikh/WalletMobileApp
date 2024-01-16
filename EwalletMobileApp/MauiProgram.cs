@@ -14,14 +14,14 @@ namespace EwalletMobileApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseUraniumUI()
-                .UseUraniumUIMaterial()
                 .UseMauiCommunityToolkit()
+                .UseUraniumUIMaterial()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("icomoon.ttf", "Icons");
+                    fonts.AddMaterialIconFonts();
                 });
 
             builder.Services.AddSqliteConnection();

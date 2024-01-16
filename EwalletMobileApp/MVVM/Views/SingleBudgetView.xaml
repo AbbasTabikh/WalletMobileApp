@@ -2,11 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EwalletMobileApp.MVVM.Views.SingleBudgetView"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:viewModels="clr-namespace:EwalletMobileApp.MVVM.ViewModels"
              xmlns:helpers="clr-namespace:EwalletMobileApp.Helpers">
 
-    <Grid BackgroundColor="Black" RowDefinitions="auto,auto,auto,*,auto" >
+    <Grid BackgroundColor="Black" RowDefinitions="auto,auto,auto,*" >
         <Image Grid.Row="0" Source="top_bg.png" Aspect="Center"/>
 
         <Grid Grid.Row="0">
@@ -35,7 +34,7 @@
             </Grid>
         </Grid>
 
-        <Frame Grid.Row="1" Margin="10,-45,10,0">
+        <Frame Grid.Row="1" Margin="10,-45,10,0" BackgroundColor="White" BorderColor="Transparent">
             <Grid RowDefinitions="auto,auto">
                 <Label  Text="budget A" HorizontalTextAlignment="Center" Grid.Row="0"  TextColor="Black"/>
                 <Label Text="$20.00" HorizontalTextAlignment="Center"  Grid.Row="1" FontSize="22" Grid.Column="0" TextColor="Black"/>
@@ -121,30 +120,6 @@
             </CollectionView>
         </ScrollView>
 
-        <material:PickerField Title="Pick one" 
-                              Grid.Row="4" 
-                              Padding="25" 
-                              TextColor="white"
-                              BackgroundColor="Transparent"
-                              BorderColor="Transparent"
-                              TitleColor="{StaticResource Light}"
-                              AllowClear="False"
-                              AccentColor="{StaticResource Primary}"
-                              InputBackground="{StaticResource LightDark}">
-            
-            <material:PickerField.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Baboon</x:String>
-                        <x:String>Capuchin Monkey</x:String>
-                        <x:String>Blue Monkey</x:String>
-                        <x:String>Squirrel Monkey</x:String>
-                        <x:String>Golden Lion Tamarin</x:String>
-                        <x:String>Howler Monkey</x:String>
-                        <x:String>Japanese Macaque</x:String>
-                    </x:Array>
-            </material:PickerField.ItemsSource>
-            
-        </material:PickerField>
     </Grid>
 
 

@@ -2,7 +2,6 @@
 using SQLite;
 using SQLiteNetExtensionsAsync.Extensions;
 using System.Linq.Expressions;
-using System.Transactions;
 
 namespace EwalletMobileApp.Services.Repository
 {
@@ -56,7 +55,7 @@ namespace EwalletMobileApp.Services.Repository
         {
             var entity = await _table.FirstOrDefaultAsync(expression);
 
-            if(entity is not null && withChildren)
+            if (entity is not null && withChildren)
             {
                 return await _asyncConnection.GetWithChildrenAsync<T>(entity.ID, false, cancellationToken);
             }
@@ -65,15 +64,15 @@ namespace EwalletMobileApp.Services.Repository
         public async Task<T?> Update(T entity, CancellationToken cancellationToken)
         {
             int updated = await _asyncConnection.UpdateAsync(entity);
-            if(updated > 0)
+            if (updated > 0)
             {
                 return entity;
             }
             return null;
         }
-        public  AsyncTableQuery<T> GetAsTableQuery(Expression<Func<T, bool>>? expression)
+        public AsyncTableQuery<T> GetAsTableQuery(Expression<Func<T, bool>>? expression)
         {
-            if(expression is not null)
+            if (expression is not null)
             {
                 return _table.Where(expression);
             }

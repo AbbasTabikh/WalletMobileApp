@@ -11,7 +11,7 @@
         Health = 6,
         Housing = 7,
         Education = 8,
-        Utitlies = 9, // Includes electricity, water, internet, etc.
+        Utilities = 9, // Includes electricity, water, internet, etc.
         Other = 10
     }
 }

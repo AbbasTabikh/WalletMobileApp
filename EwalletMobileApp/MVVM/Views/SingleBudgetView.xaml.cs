@@ -4,9 +4,9 @@ namespace EwalletMobileApp.MVVM.Views;
 
 public partial class SingleBudgetView : ContentPage
 {
-	public SingleBudgetView(SingleBudgetViewModel viewModel)
-	{
+    public SingleBudgetView(SingleBudgetViewModel viewModel)
+    {
         InitializeComponent();
         BindingContext = viewModel;
-	}
+    }
 }

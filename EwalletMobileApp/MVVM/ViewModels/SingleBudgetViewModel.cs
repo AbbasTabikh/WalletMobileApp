@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using EwalletMobileApp.Enums;
 using EwalletMobileApp.MVVM.Models;
 using EwalletMobileApp.MVVM.Views;
@@ -10,8 +11,24 @@ namespace EwalletMobileApp.MVVM.ViewModels
 {
     public partial class SingleBudgetViewModel : ViewModelBase
     {
+        public string[] Categories { get; } =
+                ["Food",
+                    "Shopping",
+                    "Transportation",
+                    "Entertainment",
+                    "Travel",
+                    "Savings",
+                    "Health",
+                    "Housing",
+                    "Education",
+                    "Utilities",
+                    "Other"];
         public ObservableCollection<Expense> Expenses { get; set; }
         private readonly IDialogueService _dialogueService;
+
+        [ObservableProperty]
+        private Expense _expense = new();
+
         public SingleBudgetViewModel(INavigationService navigationService,
                                                 IDialogueService dialogueService) : base(navigationService)
         {
@@ -22,11 +39,16 @@ namespace EwalletMobileApp.MVVM.ViewModels
         [RelayCommand]
         private async Task OpenDialogue()
         {
-            var dialogue = DialogueFactory.CreateInstance<ExpenseDialogue>();
+            var dialogue = DialogueFactory.CreateInstance<ExpenseDialogue, SingleBudgetViewModel>(this);
             await _dialogueService.Open(dialogue);
         }
 
-
+        [RelayCommand]
+        private void AddExpense()
+        {
+            //validation goes here..
+            Expenses.Add(Expense);
+        }
         private ObservableCollection<Expense> AddDummyData()
         {
             return
