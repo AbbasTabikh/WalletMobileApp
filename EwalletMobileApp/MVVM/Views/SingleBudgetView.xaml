@@ -36,7 +36,7 @@
 
         <Frame Grid.Row="1" Margin="10,-45,10,0" BackgroundColor="White" BorderColor="Transparent">
             <Grid RowDefinitions="auto,auto">
-                <Label  Text="budget A" HorizontalTextAlignment="Center" Grid.Row="0"  TextColor="Black"/>
+                <Label  Text="20$" HorizontalTextAlignment="Center" Grid.Row="0"  TextColor="Black"/>
                 <Label Text="$20.00" HorizontalTextAlignment="Center"  Grid.Row="1" FontSize="22" Grid.Column="0" TextColor="Black"/>
             </Grid>
         </Frame>

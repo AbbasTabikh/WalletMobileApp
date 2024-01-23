@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             x:Class="EwalletMobileApp.MVVM.Views.BudgetBottomSheet"
+             Background="{StaticResource BgColor}"
+                   CornerRadius="25"
+                   Padding="25,10,25,25">
+
+
+    <the49:BottomSheet.Resources>
+        <Style x:Key="BadgeButton" TargetType="Button">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Margin" Value="0,2,2,5"/>
+            <Setter Property="Padding" Value="12,0,12,0" />
+            <Setter Property="HeightRequest" Value="30" />
+            <Setter Property="Command" Value="{Binding AddCommand}"/>
+            <Setter Property="Background" Value="#272727" />
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+    </the49:BottomSheet.Resources>
+    
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto">
+        <Image>
+            <Image.Source>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Remove}"/>
+            </Image.Source>
+        </Image>
+        <Label Grid.Row="1" Text="Create Budget" FontAttributes="Bold" TextColor="White" FontSize="25"/>
+        <Label Grid.Row="2" Text="How much do you want to top up?" TextColor="#B4B4B4" FontSize="18"/>
+
+        <VerticalStackLayout Grid.Row="3" >
+            <Label Grid.Row="1" Text="Amount" TextColor="#B4B4B4" FontSize="20"/>
+            <material:TextField
+                Icon="{FontImageSource FontFamily=MaterialRegular, 
+                Glyph={x:Static m:MaterialRegular.Attach_money}, 
+                Color= #363636 }"
+                Margin="0,2,0,10"
+                InputBackground="#191B1E"
+                BorderColor="Transparent"
+                TextColor="#D8D8D8"
+                FontSize="20"
+                Text="{Binding TotalSum, Mode=TwoWay}"
+                InputBackgroundColor="Transparent"
+                AccentColor="{StaticResource Primary}"/>
+
+        </VerticalStackLayout>
+        <FlexLayout Margin="0,5,0,15" Grid.Row="4" Wrap="Wrap" >
+
+            <Button 
+                    StyleClass="FilledButton"
+                    Style="{StaticResource BadgeButton}"
+                    TextColor="White"
+                    CommandParameter="0.5"
+                    Text="$0.5"/>
+            <Button 
+                    StyleClass="FilledButton"
+                    Style="{StaticResource BadgeButton}"
+                    TextColor="White"
+                    CommandParameter="2"
+                    Text="$2.00"/>
+            <Button 
+                    StyleClass="FilledButton"
+                    Style="{StaticResource BadgeButton}"
+                    TextColor="White"
+                    CommandParameter="5"
+                    Text="$5.00"/>
+            <Button 
+                    StyleClass="FilledButton"
+                    Style="{StaticResource BadgeButton}"
+                    TextColor="White"
+                    CommandParameter="50"
+                    Text="$50.00"/>
+
+            <Button 
+                    StyleClass="FilledButton"
+                    Style="{StaticResource BadgeButton}"
+                    TextColor="White"
+                    CommandParameter="250"
+                    Text="$250.00"/>
+
+            <Button 
+                    StyleClass="FilledButton"
+                    Style="{StaticResource BadgeButton}"
+                    TextColor="White"
+                    CommandParameter="500"
+                    Text="$500.00"/>
+
+            <Button 
+                    StyleClass="FilledButton"
+                    Style="{StaticResource BadgeButton}"
+                    TextColor="White"
+                    CommandParameter="1000"
+                    Text="$1000.00"/>
+
+        </FlexLayout>
+        
+        <Button 
+            Grid.Row="5" 
+            Margin="0,5,0,0" 
+            CornerRadius="8"
+            Command="{Binding CreateBudgetCommand}"
+            BackgroundColor="{StaticResource Primary}" 
+            Text="Continue"/>
+    </Grid>
+
+</the49:BottomSheet>

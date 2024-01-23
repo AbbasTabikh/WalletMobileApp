@@ -3,7 +3,9 @@ using EwalletMobileApp.Extenstions;
 using EwalletMobileApp.MVVM.ViewModels;
 using EwalletMobileApp.MVVM.Views;
 using Microsoft.Extensions.Logging;
+using The49.Maui.BottomSheet;
 using UraniumUI;
+using Xe.AcrylicView;
 
 namespace EwalletMobileApp
 {
@@ -16,6 +18,8 @@ namespace EwalletMobileApp
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseUraniumUIMaterial()
+                .UseBottomSheet()
+                .UseAcrylicView()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -23,6 +27,8 @@ namespace EwalletMobileApp
                     fonts.AddFont("icomoon.ttf", "Icons");
                     fonts.AddMaterialIconFonts();
                 });
+
+
 
             builder.Services.AddSqliteConnection();
             builder.Services.AddServices();
@@ -38,7 +44,6 @@ namespace EwalletMobileApp
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
             return builder.Build();
         }
     }

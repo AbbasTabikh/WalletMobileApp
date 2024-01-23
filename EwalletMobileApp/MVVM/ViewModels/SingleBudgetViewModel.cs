@@ -9,20 +9,24 @@ using System.Collections.ObjectModel;
 
 namespace EwalletMobileApp.MVVM.ViewModels
 {
+    [QueryProperty(nameof(SelectedBudget), "selectedBudget")]
     public partial class SingleBudgetViewModel : ViewModelBase
     {
+        [ObservableProperty]
+        private Budget? _selectedBudget;
+
         public string[] Categories { get; } =
-                ["Food",
-                    "Shopping",
-                    "Transportation",
-                    "Entertainment",
-                    "Travel",
-                    "Savings",
-                    "Health",
-                    "Housing",
-                    "Education",
-                    "Utilities",
-                    "Other"];
+                    ["Food",
+                        "Shopping",
+                        "Transportation",
+                        "Entertainment",
+                        "Travel",
+                        "Savings",
+                        "Health",
+                        "Housing",
+                        "Education",
+                        "Utilities",
+                        "Other"];
         public ObservableCollection<Expense> Expenses { get; set; }
         private readonly IDialogueService _dialogueService;
 
