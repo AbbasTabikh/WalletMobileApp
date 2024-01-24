@@ -30,7 +30,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             await _navigationService.NavigateTo(nameof(SingleBudgetView),
                                                                 new Dictionary<string, object> { { "selectedBudget", selectedItem } });
-
         }
 
         [RelayCommand]

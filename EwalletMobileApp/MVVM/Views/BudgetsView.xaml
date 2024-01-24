@@ -25,7 +25,7 @@
                             CommandParameter="{Binding .}"/>
                     </Frame.GestureRecognizers>
                 </Frame>
-                <Label Text="{Binding CreationDate, StringFormat='{0:MM/dd/yyyy}'}" 
+                <Label Text="{Binding Name}" 
                        FontAttributes="Bold" 
                        VerticalTextAlignment="Center" 
                        HorizontalTextAlignment="Start" 
@@ -118,17 +118,18 @@
                 </Button>
 
                 <Label Text="List of budgets:" 
-               TextColor="White" 
-               Grid.Row="2" 
-               FontAttributes="Bold"
-               Margin="0,25,0,10"/>
+                       TextColor="White" 
+                       Grid.Row="2" 
+                       FontAttributes="Bold"
+                       Margin="0,25,0,10"/>
+                
                 <Label  HorizontalTextAlignment="End" 
-                HorizontalOptions="End" 
-                FontFamily="icomoon"
-                VerticalTextAlignment="Center"
-                Grid.Column="1"
-                Grid.Row="2"
-                Margin="0,25,5,10"/>
+                        HorizontalOptions="End" 
+                        FontFamily="icomoon"
+                        VerticalTextAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Margin="0,25,5,10"/>
 
                 <ScrollView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center">
                     <CollectionView x:Name="budgetsCollectionView" ItemTemplate="{StaticResource budgetCollectionView}" 

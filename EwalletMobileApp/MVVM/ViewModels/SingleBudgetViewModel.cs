@@ -6,38 +6,57 @@ using EwalletMobileApp.MVVM.Views;
 using EwalletMobileApp.Services.Factories;
 using EwalletMobileApp.Services.Interfaces;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace EwalletMobileApp.MVVM.ViewModels
 {
-    [QueryProperty(nameof(SelectedBudget), "selectedBudget")]
+    [QueryProperty(nameof(SelectedBudget), "SelectedBudget")]
     public partial class SingleBudgetViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private Budget? _selectedBudget;
-
-        public string[] Categories { get; } =
-                    ["Food",
-                        "Shopping",
-                        "Transportation",
-                        "Entertainment",
-                        "Travel",
-                        "Savings",
-                        "Health",
-                        "Housing",
-                        "Education",
-                        "Utilities",
-                        "Other"];
-        public ObservableCollection<Expense> Expenses { get; set; }
-        private readonly IDialogueService _dialogueService;
+        private Budget _selectedBudget;
 
         [ObservableProperty]
         private Expense _expense = new();
 
+        public ObservableCollection<Expense> Expenses { get; set; } = new ObservableCollection<Expense>();
+        private readonly IDialogueService _dialogueService;
+        private readonly IExpenseService _expenseService;
+
+        public string[] Categories { get; } = ["Food",
+            "Shopping",
+            "Transportation",
+            "Entertainment",
+            "Travel",
+            "Savings",
+            "Health",
+            "Housing",
+            "Education",
+            "Utilities",
+            "Other"];
+
         public SingleBudgetViewModel(INavigationService navigationService,
-                                                IDialogueService dialogueService) : base(navigationService)
+                                                IDialogueService dialogueService,
+                                                IExpenseService expenseService) : base(navigationService)
         {
-            Expenses = AddDummyData();
             _dialogueService = dialogueService;
+            _expenseService = expenseService;
+
+            _ = GetRequiredExpenses();
+        }
+
+
+        private async Task GetRequiredExpenses()
+        {
+            if (SelectedBudget == null)
+            {
+                Debug.WriteLine("laskjdaskljdaskjdlaskjdlaskjdlkasjdlkasjlkdjaskd");
+            }
+            //var requiredExpenses = await _expenseService.GetAll(SelectedBudget.ID, CancellationToken.None);
+            //if (requiredExpenses != null && requiredExpenses.Any())
+            //{
+            //    Expenses = new ObservableCollection<Expense>(requiredExpenses);
+            //}
         }
 
         [RelayCommand]
@@ -46,6 +65,8 @@ namespace EwalletMobileApp.MVVM.ViewModels
             var dialogue = DialogueFactory.CreateInstance<ExpenseDialogue, SingleBudgetViewModel>(this);
             await _dialogueService.Open(dialogue);
         }
+
+
 
         [RelayCommand]
         private void AddExpense()

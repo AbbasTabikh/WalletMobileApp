@@ -11,13 +11,11 @@ namespace EwalletMobileApp.Services.Repository
         private readonly AsyncTableQuery<T> _table;
         public Repository(SQLiteAsyncConnection asyncConnection)
         {
-            //inject later as scoped
-            //_asyncConnection = new SQLiteAsyncConnection(Constants.DataBasePath, Constants.Flags);
-
             _asyncConnection = asyncConnection;
-            _asyncConnection.CreateTableAsync<T>();
+            _asyncConnection.CreateTableAsync<T>().Wait();
             _table = _asyncConnection.Table<T>();
         }
+
         public async Task Create(T entity, bool withChildren)
         {
             entity.SetCreationDate();

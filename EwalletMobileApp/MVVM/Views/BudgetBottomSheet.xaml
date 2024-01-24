@@ -5,6 +5,7 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              x:Class="EwalletMobileApp.MVVM.Views.BudgetBottomSheet"
+                   IsCancelable="True"
              Background="{StaticResource BgColor}"
                    CornerRadius="25"
                    Padding="25,10,25,25">

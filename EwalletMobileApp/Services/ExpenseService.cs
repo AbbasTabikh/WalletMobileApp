@@ -4,7 +4,7 @@ using EwalletMobileApp.Services.Repository;
 
 namespace EwalletMobileApp.Services
 {
-    internal class ExpenseService : IExpenseService
+    public class ExpenseService : IExpenseService
     {
         private readonly IRepository<Expense> _expenseRepository;
         public ExpenseService(IRepository<Expense> expenseRepository, IRepository<Budget> budgetRepository)
@@ -23,6 +23,12 @@ namespace EwalletMobileApp.Services
         {
             await _expenseRepository.BulkDelete(ids);
         }
+
+        public async Task<IEnumerable<Expense>?> GetAll(int budgetID, CancellationToken cancellationToken)
+        {
+            return await _expenseRepository.GetMany(x => x.BudgetID == budgetID, false, cancellationToken);
+        }
+
         public async Task<Expense?> GetByID(int id, CancellationToken cancellationToken)
         {
             return await _expenseRepository.GetByID(id, false, cancellationToken);

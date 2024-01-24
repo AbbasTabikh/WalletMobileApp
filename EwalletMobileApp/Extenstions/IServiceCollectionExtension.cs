@@ -5,7 +5,7 @@ using SQLite;
 
 namespace EwalletMobileApp.Extenstions
 {
-    internal static class IServiceCollectionExtension
+    public static class IServiceCollectionExtension
     {
         public static IServiceCollection AddSqliteConnection(this IServiceCollection servicesDescriptor)
         {
