@@ -5,10 +5,9 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              x:Class="EwalletMobileApp.MVVM.Views.BudgetBottomSheet"
-                   IsCancelable="True"
              Background="{StaticResource BgColor}"
-                   CornerRadius="25"
-                   Padding="25,10,25,25">
+             CornerRadius="25"
+             Padding="25,10,25,25">
 
 
     <the49:BottomSheet.Resources>
@@ -33,7 +32,8 @@
         <Label Grid.Row="2" Text="How much do you want to top up?" TextColor="#B4B4B4" FontSize="18"/>
 
         <VerticalStackLayout Grid.Row="3" >
-            <Label Grid.Row="1" Text="Amount" TextColor="#B4B4B4" FontSize="20"/>
+            <Label Text="Amount" TextColor="#B4B4B4" FontSize="20"/>
+
             <material:TextField
                 Icon="{FontImageSource FontFamily=MaterialRegular, 
                 Glyph={x:Static m:MaterialRegular.Attach_money}, 
@@ -43,13 +43,12 @@
                 BorderColor="Transparent"
                 TextColor="#D8D8D8"
                 FontSize="20"
-                Text="{Binding TotalSum, Mode=TwoWay}"
+                Text="{Binding NewBudget.Total, Mode=TwoWay}"
                 InputBackgroundColor="Transparent"
                 AccentColor="{StaticResource Primary}"/>
 
         </VerticalStackLayout>
         <FlexLayout Margin="0,5,0,15" Grid.Row="4" Wrap="Wrap" >
-
             <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
@@ -74,21 +73,18 @@
                     TextColor="White"
                     CommandParameter="50"
                     Text="$50.00"/>
-
             <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="250"
                     Text="$250.00"/>
-
             <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="500"
                     Text="$500.00"/>
-
             <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"

@@ -1,8 +1,9 @@
-﻿using SQLite;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
 
 namespace EwalletMobileApp.MVVM.Models
 {
-    public class BaseEntity
+    public class BaseEntity : ObservableObject
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }

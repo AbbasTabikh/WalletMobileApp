@@ -36,8 +36,17 @@
 
         <Frame Grid.Row="1" Margin="10,-45,10,0" BackgroundColor="White" BorderColor="Transparent">
             <Grid RowDefinitions="auto,auto">
-                <Label  Text="20$" HorizontalTextAlignment="Center" Grid.Row="0"  TextColor="Black"/>
-                <Label Text="$20.00" HorizontalTextAlignment="Center"  Grid.Row="1" FontSize="22" Grid.Column="0" TextColor="Black"/>
+                <Label  Text="{Binding SelectedBudget.Name}" 
+                        HorizontalTextAlignment="Center" 
+                        Grid.Row="0"  
+                        TextColor="Black"/>
+                
+                <Label Text="{Binding SelectedBudget.Total}" 
+                       HorizontalTextAlignment="Center"  
+                       Grid.Row="1" 
+                       FontSize="22" 
+                       Grid.Column="0" 
+                       TextColor="Black"/>
             </Grid>
         </Frame>
         <HorizontalStackLayout Grid.Row="2"  Margin="10,10,0,0" VerticalOptions="Center">

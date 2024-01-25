@@ -13,7 +13,7 @@ namespace EwalletMobileApp.Services
             _budgetRepository = budgetRepository;
         }
 
-        public async Task<IEnumerable<Budget>> GetItems(QueryParameters queryParameters, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Budget>> Get(QueryParameters queryParameters, CancellationToken cancellationToken)
         {
             var query = _budgetRepository.GetAsTableQuery(null);
             var requestedItems = await GetRequestedItems(query, queryParameters.CurrentPage, queryParameters.PageSize);

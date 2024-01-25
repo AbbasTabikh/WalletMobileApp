@@ -1,23 +1,45 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EwalletMobileApp.Enums;
 using EwalletMobileApp.MVVM.Models;
 using EwalletMobileApp.MVVM.Views;
 using EwalletMobileApp.Services.Factories;
 using EwalletMobileApp.Services.Interfaces;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace EwalletMobileApp.MVVM.ViewModels
 {
-    [QueryProperty(nameof(SelectedBudget), "SelectedBudget")]
+    [QueryProperty(nameof(SelectedBudget), "selectedBudget")]
     public partial class SingleBudgetViewModel : ViewModelBase
     {
-        [ObservableProperty]
+
         private Budget _selectedBudget;
 
+        public Budget SelectedBudget
+        {
+            get { return _selectedBudget; }
+            set
+            {
+                _selectedBudget = value;
+                OnPropertyChanged(nameof(SelectedBudget));
+                NewExpense.BudgetID = _selectedBudget.ID;
+                Task.Run(async () => await LoadExpenses(_selectedBudget));
+            }
+        }
+
+        private async Task LoadExpenses(Budget budget)
+        {
+            if (budget is not null)
+            {
+                var requiredExpenses = await _expenseService.GetAll(budget.ID, CancellationToken.None);
+                if (requiredExpenses != null && requiredExpenses.Any())
+                {
+                    Expenses = new ObservableCollection<Expense>(requiredExpenses);
+                }
+            }
+        }
+
         [ObservableProperty]
-        private Expense _expense = new();
+        private Expense _newExpense = new();
 
         public ObservableCollection<Expense> Expenses { get; set; } = new ObservableCollection<Expense>();
         private readonly IDialogueService _dialogueService;
@@ -41,22 +63,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             _dialogueService = dialogueService;
             _expenseService = expenseService;
-
-            _ = GetRequiredExpenses();
-        }
-
-
-        private async Task GetRequiredExpenses()
-        {
-            if (SelectedBudget == null)
-            {
-                Debug.WriteLine("laskjdaskljdaskjdlaskjdlaskjdlkasjdlkasjlkdjaskd");
-            }
-            //var requiredExpenses = await _expenseService.GetAll(SelectedBudget.ID, CancellationToken.None);
-            //if (requiredExpenses != null && requiredExpenses.Any())
-            //{
-            //    Expenses = new ObservableCollection<Expense>(requiredExpenses);
-            //}
         }
 
         [RelayCommand]
@@ -69,65 +75,10 @@ namespace EwalletMobileApp.MVVM.ViewModels
 
 
         [RelayCommand]
-        private void AddExpense()
+        private async Task AddExpense()
         {
-            //validation goes here..
-            Expenses.Add(Expense);
+            await _expenseService.Create(NewExpense);
+            Expenses.Add(NewExpense);
         }
-        private ObservableCollection<Expense> AddDummyData()
-        {
-            return
-            [
-                new Expense
-                {
-                    Price = 26236.22,
-                    ID = 1,
-                    CreationDate = DateTime.Now,
-                    Category = Category.Education,
-                    Name = "Expense Name"
-                },
-                new Expense
-                {
-                    Price = 26236,
-                    ID = 2,
-                    CreationDate = DateTime.Now,
-                    Category = Category.Transportation,
-                    Name = "Expense Name"
-                },
-                new Expense
-                {
-                    Price = 26236,
-                    Name = "Expense Name",
-                    ID = 3,
-                    CreationDate = DateTime.Now,
-                    Category = Category.Transportation
-                },
-                new Expense
-                {
-                    Name = "Expense Name",
-                    Price = 26236,
-                    ID = 4,
-                    CreationDate = DateTime.Now,
-                    Category = Category.Transportation
-                },
-                new Expense
-                {
-                    Name = "Expense Name",
-                    Price = 26236.23,
-                    ID = 5,
-                    CreationDate = DateTime.Now,
-                    Category = Category.Other
-                },
-                new Expense
-                {
-                    Name = "Expense Name",
-                    Price = 26236,
-                    ID = 6,
-                    CreationDate = DateTime.Now,
-                    Category = Category.Savings
-                },
-            ];
-        }
-
     }
 }

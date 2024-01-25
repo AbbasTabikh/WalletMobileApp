@@ -20,7 +20,7 @@
                 <Label Text="Name" Padding="3" 
                        TextColor="{StaticResource Light}"/>
                 <Entry Placeholder="Name"
-                       Text="{Binding Expense.Name}"
+                       Text="{Binding NewExpense.Name}"
                        TextColor="{StaticResource White}"  
                        BackgroundColor="#191B1E" 
                        PlaceholderColor="{StaticResource LightDark}"/>
@@ -35,7 +35,7 @@
                                 AllowClear="False"
                                 Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Category}}"
                                 BorderColor="{StaticResource LightDark}"
-                                SelectedItem="{Binding Expense.Category, Mode=TwoWay, Converter={StaticResource StringToEnumConverter}}"
+                                SelectedItem="{Binding NewExpense.Category, Mode=TwoWay, Converter={StaticResource StringToEnumConverter}}"
                                 AccentColor="{StaticResource Light}"
                                 TextColor="{StaticResource White}"
                                 TitleColor="{StaticResource Light}"
@@ -48,7 +48,7 @@
                        TextColor="{StaticResource Light}"/>
                 <Entry Placeholder="Price" 
                        TextColor="{StaticResource White}"
-                       Text="{Binding Expense.Price}"
+                       Text="{Binding NewExpense.Price}"
                        BackgroundColor="#191B1E" 
                       PlaceholderColor="{StaticResource LightDark}"/>
             </VerticalStackLayout>

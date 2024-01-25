@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EwalletMobileApp.Models;
 using EwalletMobileApp.MVVM.Models;
 using EwalletMobileApp.MVVM.Views;
 using EwalletMobileApp.Services.Factories;
@@ -11,20 +12,38 @@ namespace EwalletMobileApp.MVVM.ViewModels
 {
     public partial class BudgetsViewModel : ViewModelBase
     {
-        public ObservableCollection<Budget> Budgets { get; set; }
+
+        private static QueryParameters parameters = new QueryParameters
+        {
+            CurrentPage = 1,
+            PageSize = 25
+        };
+        public IAsyncRelayCommand LoadBudgetsOnStartCommand { get; }
+        private readonly IBudgetService _budgetService;
+        public ObservableCollection<Budget> Budgets { get; set; } = [];
 
         [ObservableProperty]
-        private double _totalSum = 0.0;
+        private Budget _newBudget = new();
 
         [ObservableProperty]
         private bool _isSheetShownAlready = false;
 
         private BottomSheet? _budgetBottomSheet;
-        public BudgetsViewModel(INavigationService navigationService) : base(navigationService)
+        public BudgetsViewModel(INavigationService navigationService, IBudgetService budgetService) : base(navigationService)
         {
-            Budgets = AddDummyData();
+            _budgetService = budgetService;
+            LoadBudgetsOnStartCommand = new AsyncRelayCommand(LoadRequiredBudgets);
         }
 
+        private async Task LoadRequiredBudgets()
+        {
+            var requiredBudgets = await _budgetService.Get(parameters, CancellationToken.None);
+            if (requiredBudgets is not null && requiredBudgets.Any())
+            {
+                Budgets = new ObservableCollection<Budget>(requiredBudgets);
+                OnPropertyChanged(nameof(Budgets));
+            }
+        }
         [RelayCommand]
         private async Task SelectionChanged(Budget selectedItem)
         {
@@ -33,16 +52,10 @@ namespace EwalletMobileApp.MVVM.ViewModels
         }
 
         [RelayCommand]
-        private void CreateBudget()
+        private async Task CreateBudget()
         {
-            Budgets.Add(new Budget
-            {
-                CreationDate = DateTime.UtcNow,
-                ID = Budgets.Count,
-                Total = TotalSum
-            });
-
-
+            await _budgetService.Create(NewBudget);
+            Budgets.Add(NewBudget);
         }
 
         [RelayCommand]
@@ -50,7 +63,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             if (double.TryParse(value, out double valueAsDouble))
             {
-                TotalSum += valueAsDouble;
+                NewBudget.Total += valueAsDouble;
             }
         }
 
@@ -69,52 +82,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
             }
 
             IsSheetShownAlready = !IsSheetShownAlready;
-        }
-
-        private ObservableCollection<Budget> AddDummyData()
-        {
-            return new ObservableCollection<Budget>()
-            {
-                new Budget
-                {
-                    ID = 1,
-                    Expenses = null,
-                    CreationDate = DateTime.Now,
-                    Total = 15005
-                },
-                new Budget
-                {
-                    ID = 2,
-                    Expenses = null,
-                    CreationDate = DateTime.Now,
-                    Total = 15010
-                },
-                new Budget
-                {
-                    ID = 3,
-                    Expenses = null,
-                    CreationDate = DateTime.Now,
-                    Total = 15000
-                },new Budget
-                {
-                    ID = 4,
-                    Expenses = null,
-                    CreationDate = DateTime.Now,
-                    Total = 1200
-                },new Budget
-                {
-                    ID = 5,
-                    Expenses = null,
-                    CreationDate = DateTime.Now,
-                    Total = 1500
-                },new Budget
-                {
-                    ID = 6,
-                    Expenses = null,
-                    CreationDate = DateTime.Now,
-                    Total = 150064
-                },
-            };
         }
     }
 }
