@@ -10,7 +10,7 @@ namespace EwalletMobileApp.Services.Interfaces
         Task Create(Budget entity);
         Task<Budget?> Update(Budget entity, CancellationToken cancellationToken);
         Task<bool> UpdateTotal(int id, decimal originalExpensePrice, decimal newExpensePrice, CancellationToken cancellationToken);
-        Task Delete(int id);
+        Task Delete(Budget budget);
         Task DeleteAll(IEnumerable<int> ids);
     }
 }

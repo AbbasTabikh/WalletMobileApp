@@ -11,9 +11,28 @@ namespace EwalletMobileApp.MVVM.ViewModels
     [QueryProperty(nameof(SelectedBudget), "selectedBudget")]
     public partial class SingleBudgetViewModel : ViewModelBase
     {
+        public string[] Categories { get; } = ["Food",
+            "Shopping",
+            "Transportation",
+            "Entertainment",
+            "Travel",
+            "Savings",
+            "Health",
+            "Housing",
+            "Education",
+            "Utilities",
+            "Other"];
+
+        [ObservableProperty]
+        private Expense _newExpense = new();
+
+        [ObservableProperty]
+        private ObservableCollection<Expense> _expenses = [];
+
+        private readonly IDialogueService _dialogueService;
+        private readonly IExpenseService _expenseService;
 
         private Budget _selectedBudget;
-
         public Budget SelectedBudget
         {
             get { return _selectedBudget; }
@@ -21,7 +40,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
             {
                 _selectedBudget = value;
                 OnPropertyChanged(nameof(SelectedBudget));
-                NewExpense.BudgetID = _selectedBudget.ID;
+                NewExpense.BudgetID = value.ID;
                 Task.Run(async () => await LoadExpenses(_selectedBudget));
             }
         }
@@ -37,25 +56,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
                 }
             }
         }
-
-        [ObservableProperty]
-        private Expense _newExpense = new();
-
-        public ObservableCollection<Expense> Expenses { get; set; } = new ObservableCollection<Expense>();
-        private readonly IDialogueService _dialogueService;
-        private readonly IExpenseService _expenseService;
-
-        public string[] Categories { get; } = ["Food",
-            "Shopping",
-            "Transportation",
-            "Entertainment",
-            "Travel",
-            "Savings",
-            "Health",
-            "Housing",
-            "Education",
-            "Utilities",
-            "Other"];
 
         public SingleBudgetViewModel(INavigationService navigationService,
                                                 IDialogueService dialogueService,

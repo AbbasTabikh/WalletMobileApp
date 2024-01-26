@@ -12,7 +12,7 @@ namespace EwalletMobileApp.Services.Repository
         Task<T?> GetSingle(Expression<Func<T, bool>> expression, bool withChildren, CancellationToken cancellationToken);
         Task Create(T entity, bool withChildren);
         Task<T?> Update(T entity, CancellationToken cancellationToken);
-        Task Delete(int id);
+        Task Delete(T entity);
         Task BulkDelete(IEnumerable<int> ids);
         Task<bool> ExecuteQuery(string query, CancellationToken cancellationToken);
     }

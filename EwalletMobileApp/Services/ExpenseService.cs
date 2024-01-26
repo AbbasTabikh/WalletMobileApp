@@ -15,9 +15,9 @@ namespace EwalletMobileApp.Services
         {
             await _expenseRepository.Create(entity, false);
         }
-        public async Task Delete(int id)
+        public async Task Delete(Expense expense)
         {
-            await _expenseRepository.Delete(id);
+            await _expenseRepository.Delete(expense);
         }
         public async Task DeleteAll(IEnumerable<int> ids)
         {

@@ -32,9 +32,9 @@ namespace EwalletMobileApp.Services
             bool hasExpenses = entity.Expenses is not null && entity.Expenses.Count is not 0;
             await _budgetRepository.Create(entity, hasExpenses);
         }
-        public async Task Delete(int id)
+        public async Task Delete(Budget budget)
         {
-            await _budgetRepository.Delete(id);
+            await _budgetRepository.Delete(budget);
         }
         public async Task<Budget?> Update(Budget entity, CancellationToken cancellationToken)
         {

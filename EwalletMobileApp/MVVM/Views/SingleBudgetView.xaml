@@ -3,8 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EwalletMobileApp.MVVM.Views.SingleBudgetView"
              xmlns:viewModels="clr-namespace:EwalletMobileApp.MVVM.ViewModels"
+             xmlns:acrylic="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:helpers="clr-namespace:EwalletMobileApp.Helpers">
 
+
+    <ContentPage.Resources>
+        <Style TargetType="Button" x:Key="GlowingCircularButton">
+            <Setter Property="Background" Value="{StaticResource Primary}"/>
+            <Setter Property="Shadow" Value="{StaticResource Shadow}"/>
+            <Setter Property="WidthRequest" Value="40"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="CornerRadius" Value="50"/>
+            <Setter Property="FontAutoScalingEnabled" Value="True"/>
+        </Style>
+
+    </ContentPage.Resources>
+    
     <Grid BackgroundColor="Black" RowDefinitions="auto,auto,auto,*" >
         <Image Grid.Row="0" Source="top_bg.png" Aspect="Center"/>
 
@@ -34,21 +49,33 @@
             </Grid>
         </Grid>
 
-        <Frame Grid.Row="1" Margin="10,-45,10,0" BackgroundColor="White" BorderColor="Transparent">
-            <Grid RowDefinitions="auto,auto">
-                <Label  Text="{Binding SelectedBudget.Name}" 
-                        HorizontalTextAlignment="Center" 
-                        Grid.Row="0"  
-                        TextColor="Black"/>
+        <acrylic:AcrylicView Grid.Row="1" 
+                             Margin="35,-75,35,0" 
+                             EffectStyle="Custom" 
+                             TintOpacity="0.3" 
+                             CornerRadius="12"
+                             TintColor="#232629">
+            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Padding="25">
+                <Label  Text="{Binding SelectedBudget.Name}"  Grid.Row="0" Grid.Column="0" TextColor="White" FontAttributes="Bold"/>
+                <Label Text="{Binding SelectedBudget.Total}" FontSize="22" Grid.Row="1" Grid.Column="0" FontAttributes="Bold" TextColor="White"/>
                 
-                <Label Text="{Binding SelectedBudget.Total}" 
-                       HorizontalTextAlignment="Center"  
-                       Grid.Row="1" 
-                       FontSize="22" 
-                       Grid.Column="0" 
-                       TextColor="Black"/>
+                <Button Style="{StaticResource GlowingCircularButton}"
+                    Grid.Column="1" 
+                    Grid.Row="0" 
+                    Grid.RowSpan="2" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="End">
+                    <Button.Shadow>
+                        <Shadow Brush="{StaticResource Primary}" Offset="0,0" Radius="45" Opacity="0.9" />
+                    </Button.Shadow>
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Edit}" Size="22"/>
+                    </Button.ImageSource>
+                </Button>
+
             </Grid>
-        </Frame>
+
+        </acrylic:AcrylicView>
         <HorizontalStackLayout Grid.Row="2"  Margin="10,10,0,0" VerticalOptions="Center">
             <Label Text="Expenses:" TextColor="White"/>
 
@@ -78,18 +105,16 @@
             <CollectionView ItemsSource="{Binding Expenses}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="*,auto">
-
+                        <Grid ColumnDefinitions="*,auto,auto">
                             <Frame BackgroundColor="#232629"
-                                   Grid.ColumnSpan="2" 
+                                   Grid.ColumnSpan="3"
                                    BorderColor="Transparent"
                                    Margin="0,3,0,2"
                                    HeightRequest="75"
                                    CornerRadius="8"/>
-
                             <Grid  Grid.Column="0" 
                                    VerticalOptions="Center" 
-                                   ColumnDefinitions="auto,auto" 
+                                   ColumnDefinitions="auto,auto,auto" 
                                    RowDefinitions="auto,auto"
                                    Padding="5">
 
@@ -100,29 +125,45 @@
                                        Grid.Column="0" 
                                        Grid.RowSpan="2"/>
 
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" TextColor="white" FontSize="12"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Category, StringFormat=Category: {0}}"  TextColor="white" FontSize="12"/>
+                                <Label Grid.Row="0" 
+                                       Grid.Column="1" 
+                                       Text="{Binding Name}" 
+                                       TextColor="white"
+                                       FontAttributes="Bold"
+                                       FontSize="15"/>
+                                <Label Grid.Row="1" 
+                                       Grid.Column="1" 
+                                       Text="{Binding Category}"  
+                                       TextColor="white" 
+                                       FontSize="14"/>
                             </Grid>
+                            <Label Grid.Column="1" Text="{Binding Price, StringFormat='${0:F2}'}" 
+                                   VerticalTextAlignment="Center"
+                                   Margin="55,10,0,0"
+                                   FontSize="18" 
+                                   TextColor="white"/>
+                                <HorizontalStackLayout Padding="0,10,5,0"  
+                                                       Grid.Column="2"
+                                                       HorizontalOptions="End" 
+                                                       VerticalOptions="Start">
 
-                            <VerticalStackLayout HeightRequest="60" Grid.Column="1" VerticalOptions="Start" Padding="0,10,5,0">
-                                <HorizontalStackLayout Padding="0,0,15,0" Margin="0,-2,0,0" Spacing="5" HorizontalOptions="End" VerticalOptions="Start">
-                                    <Label  TextColor="#B7B6F8"
-                                            FontSize="10"
-                                            Text="{x:Static helpers:IconFont.Trash}"
-                                            FontFamily="icomoon"/>
+                                    <Button WidthRequest="28"
+                                            BackgroundColor="{StaticResource LightDark}"
+                                            HeightRequest="28">
 
-                                    <Label  TextColor="#B7B6F8"
-                                            FontSize="10"
-                                            Text="{x:Static helpers:IconFont.Bell}"
-                                            FontFamily="icomoon"/>
+                                        <Button.ImageSource>
+                                            <FontImageSource  FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Edit}" Size="15"/>
+                                        </Button.ImageSource>
+                                    </Button>
+
+                                    <Button WidthRequest="28"
+                                            BackgroundColor="{StaticResource LightDark}"
+                                            HeightRequest="28">
+                                        <Button.ImageSource>
+                                            <FontImageSource  FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Delete}" Size="15"/>
+                                        </Button.ImageSource>
+                                    </Button>
                                 </HorizontalStackLayout>
-                                <Label Text="{Binding Price, StringFormat=${0:F2}}" 
-                                       VerticalTextAlignment="Center" 
-                                       Padding="0,5,15,5" 
-                                       FontSize="12" 
-                                       TextColor="white"/>
-
-                            </VerticalStackLayout>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

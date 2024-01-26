@@ -22,7 +22,7 @@
         </Style>
     </the49:BottomSheet.Resources>
     
-    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto">
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto">
         <Image>
             <Image.Source>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Remove}"/>
@@ -31,7 +31,22 @@
         <Label Grid.Row="1" Text="Create Budget" FontAttributes="Bold" TextColor="White" FontSize="25"/>
         <Label Grid.Row="2" Text="How much do you want to top up?" TextColor="#B4B4B4" FontSize="18"/>
 
-        <VerticalStackLayout Grid.Row="3" >
+        <VerticalStackLayout Grid.Row="3" Margin="0,15,0,0">
+            <Label Text="Name" TextColor="#B4B4B4" FontSize="20"/>
+
+            <material:TextField
+                Margin="0,2,0,10"
+                InputBackground="#191B1E"
+                BorderColor="Transparent"
+                TextColor="#D8D8D8"
+                FontSize="20"
+                Text="{Binding NewBudget.Name}"
+                InputBackgroundColor="Transparent"
+                AccentColor="{StaticResource Primary}"/>
+
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Row="4" >
             <Label Text="Amount" TextColor="#B4B4B4" FontSize="20"/>
 
             <material:TextField
@@ -48,7 +63,7 @@
                 AccentColor="{StaticResource Primary}"/>
 
         </VerticalStackLayout>
-        <FlexLayout Margin="0,5,0,15" Grid.Row="4" Wrap="Wrap" >
+        <FlexLayout Margin="0,5,0,15" Grid.Row="5" Wrap="Wrap" >
             <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
@@ -91,11 +106,10 @@
                     TextColor="White"
                     CommandParameter="1000"
                     Text="$1000.00"/>
-
         </FlexLayout>
         
         <Button 
-            Grid.Row="5" 
+            Grid.Row="6"
             Margin="0,5,0,0" 
             CornerRadius="8"
             Command="{Binding CreateBudgetCommand}"

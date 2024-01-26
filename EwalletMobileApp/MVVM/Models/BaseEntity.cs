@@ -9,7 +9,7 @@ namespace EwalletMobileApp.MVVM.Models
         public int ID { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public string Name { get; set; } = "Newly created";
+        public string Name { get; set; }
 
         public virtual void SetCreationDate()
         {

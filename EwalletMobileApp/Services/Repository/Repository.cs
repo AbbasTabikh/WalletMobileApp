@@ -29,9 +29,9 @@ namespace EwalletMobileApp.Services.Repository
                 await _asyncConnection.InsertAsync(entity);
             }
         }
-        public async Task Delete(int id)
+        public async Task Delete(T entity)
         {
-            await _asyncConnection.DeleteAsync(id);
+            await _asyncConnection.DeleteAsync(entity);
         }
         public async Task<IEnumerable<T>> GetMany(Expression<Func<T, bool>> expression, bool withChildren, CancellationToken cancellationToken)
         {

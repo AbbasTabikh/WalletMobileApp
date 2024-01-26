@@ -13,14 +13,15 @@ namespace EwalletMobileApp.MVVM.ViewModels
     public partial class BudgetsViewModel : ViewModelBase
     {
 
-        private static QueryParameters parameters = new QueryParameters
+        private static QueryParameters parameters = new()
         {
             CurrentPage = 1,
             PageSize = 25
         };
-        public IAsyncRelayCommand LoadBudgetsOnStartCommand { get; }
         private readonly IBudgetService _budgetService;
-        public ObservableCollection<Budget> Budgets { get; set; } = [];
+
+        [ObservableProperty]
+        private ObservableCollection<Budget> _budgets = [];
 
         [ObservableProperty]
         private Budget _newBudget = new();
@@ -29,10 +30,11 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private bool _isSheetShownAlready = false;
 
         private BottomSheet? _budgetBottomSheet;
-        public BudgetsViewModel(INavigationService navigationService, IBudgetService budgetService) : base(navigationService)
+        public BudgetsViewModel(INavigationService navigationService,
+                                            IBudgetService budgetService) : base(navigationService)
         {
             _budgetService = budgetService;
-            LoadBudgetsOnStartCommand = new AsyncRelayCommand(LoadRequiredBudgets);
+            _ = LoadRequiredBudgets();
         }
 
         private async Task LoadRequiredBudgets()
@@ -41,14 +43,21 @@ namespace EwalletMobileApp.MVVM.ViewModels
             if (requiredBudgets is not null && requiredBudgets.Any())
             {
                 Budgets = new ObservableCollection<Budget>(requiredBudgets);
-                OnPropertyChanged(nameof(Budgets));
             }
         }
+
         [RelayCommand]
         private async Task SelectionChanged(Budget selectedItem)
         {
             await _navigationService.NavigateTo(nameof(SingleBudgetView),
                                                                 new Dictionary<string, object> { { "selectedBudget", selectedItem } });
+        }
+
+        [RelayCommand]
+        private async Task Swiped(Budget budeget)
+        {
+            await _budgetService.Delete(budeget);
+            Budgets.Remove(budeget);
         }
 
         [RelayCommand]
