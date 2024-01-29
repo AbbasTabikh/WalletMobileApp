@@ -13,7 +13,6 @@ public class Budget : BaseEntity
 
     [OneToMany(CascadeOperations = CascadeOperation.All)]
     public ICollection<Expense>? Expenses { get; set; }
-
     public override void SetCreationDate()
     {
         CreationDate = DateTime.UtcNow;

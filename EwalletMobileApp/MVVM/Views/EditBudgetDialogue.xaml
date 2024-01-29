@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EwalletMobileApp.MVVM.Views.ExpenseDialogue"
+             x:Class="EwalletMobileApp.MVVM.Views.EditBudgetDialogue"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-             xmlns:converters="clr-namespace:EwalletMobileApp.Converters"
+             xmlns:converters="clr-namespace:EwalletMobileApp.Converters" 
              CanBeDismissedByTappingOutsideOfPopup="True">
 
-    <toolkit:Popup.Resources>
-        <converters:StringToEnumConverter x:Key="StringToEnumConverter" />
-    </toolkit:Popup.Resources>
 
     <Border BackgroundColor="{StaticResource Dark}"
             Margin="15,0,15,0"
@@ -19,39 +16,37 @@
             HeightRequest="450">
         <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
             <Label Grid.Row="0" Text="Add Expense" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
-
             <VerticalStackLayout Grid.Row="1">
                 <Label Text="Name" Padding="3" 
                    TextColor="{StaticResource Light}"/>
                 <Entry Placeholder="Name"
-                   Text="{Binding NewExpense.Name}"
+                   Text="{Binding SelectedBudget.Name, Mode=TwoWay}"
                    TextColor="{StaticResource White}"  
                    BackgroundColor="#191B1E" 
                    PlaceholderColor="{StaticResource LightDark}"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="2">
-                <Label Text="Category" Padding="3" 
+                <Label Text="Creation Date" Padding="3" 
                    TextColor="{StaticResource Light}"/>
-                <material:PickerField 
+                <material:DatePickerField 
                             Padding="3"
                             AllowClear="False"
-                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Category}}"
+                            Date="{Binding SelectedBudget.CreationDate}"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}"
                             BorderColor="{StaticResource LightDark}"
-                            SelectedItem="{Binding NewExpense.Category, Mode=TwoWay, Converter={StaticResource StringToEnumConverter}}"
-                            AccentColor="{StaticResource Light}"
+                            AccentColor="{StaticResource Primary}"
                             TextColor="{StaticResource White}"
-                            TitleColor="{StaticResource Light}"
-                            ItemsSource="{Binding Categories}"/>
+                            TitleColor="{StaticResource Light}"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="3">
-                <Label Text="Price" 
+                <Label Text="Total" 
                    Padding="3" 
                    TextColor="{StaticResource Light}"/>
                 <Entry Placeholder="Price" 
                    TextColor="{StaticResource White}"
-                   Text="{Binding NewExpense.Price}"
+                   Text="{Binding SelectedBudget.Total, Mode=TwoWay}"
                    BackgroundColor="#191B1E" 
                   PlaceholderColor="{StaticResource LightDark}"/>
             </VerticalStackLayout>
@@ -60,7 +55,7 @@
                 Grid.Row="4"
                 CornerRadius="5" 
                 Margin="0,5,0,5"
-                Command="{Binding AddExpenseCommand}"
+                Command="{Binding UpdateBudgetCommand}"
                 Padding="5"
                 WidthRequest="220"
                 HorizontalOptions="Center"
@@ -70,7 +65,6 @@
 
         </Grid>
     </Border>
-
 
 
 </toolkit:Popup>

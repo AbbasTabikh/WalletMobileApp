@@ -57,19 +57,28 @@
                              TintColor="#232629">
             <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Padding="25">
                 <Label  Text="{Binding SelectedBudget.Name}"  Grid.Row="0" Grid.Column="0" TextColor="White" FontAttributes="Bold"/>
-                <Label Text="{Binding SelectedBudget.Total}" FontSize="22" Grid.Row="1" Grid.Column="0" FontAttributes="Bold" TextColor="White"/>
+
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
+                    <Label Text="{Binding Wasted}" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="/" FontSize="22" TextColor="White"/>
+                    <Label Text="{Binding SelectedBudget.Total}" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                </HorizontalStackLayout>
                 
                 <Button Style="{StaticResource GlowingCircularButton}"
                     Grid.Column="1" 
-                    Grid.Row="0" 
+                    Grid.Row="0"
                     Grid.RowSpan="2" 
                     VerticalOptions="Center"
-                    HorizontalOptions="End">
+                    HorizontalOptions="End"
+                    Command="{Binding OpenEditBudgetDialogueCommand}">
                     <Button.Shadow>
                         <Shadow Brush="{StaticResource Primary}" Offset="0,0" Radius="45" Opacity="0.9" />
                     </Button.Shadow>
                     <Button.ImageSource>
-                        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Edit}" Size="22"/>
+                        <FontImageSource 
+                            FontFamily="MaterialRegular" 
+                            Glyph="{x:Static m:MaterialRegular.Edit}" 
+                            Size="22"/>
                     </Button.ImageSource>
                 </Button>
 
@@ -98,8 +107,6 @@
                        TextColor="White"
                        FontSize="15"/>
             </Frame>
-
-
         </HorizontalStackLayout>
         <ScrollView Grid.Row="3" Margin="15,10,15,0" >
             <CollectionView ItemsSource="{Binding Expenses}" >
@@ -117,14 +124,12 @@
                                    ColumnDefinitions="auto,auto,auto" 
                                    RowDefinitions="auto,auto"
                                    Padding="5">
-
                                 <Image Source="star.png" 
                                        HeightRequest="35"  
                                        Grid.Row="0" 
                                        Margin="5,0,8,0"
                                        Grid.Column="0" 
                                        Grid.RowSpan="2"/>
-
                                 <Label Grid.Row="0" 
                                        Grid.Column="1" 
                                        Text="{Binding Name}" 
@@ -147,17 +152,21 @@
                                                        HorizontalOptions="End" 
                                                        VerticalOptions="Start">
 
-                                    <Button WidthRequest="28"
+                                <Button WidthRequest="28"
                                             BackgroundColor="{StaticResource LightDark}"
                                             HeightRequest="28">
-
-                                        <Button.ImageSource>
-                                            <FontImageSource  FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Edit}" Size="15"/>
+                                    <Button.ImageSource>
+                                            <FontImageSource 
+                                                FontFamily="MaterialRegular" 
+                                                Glyph="{x:Static m:MaterialRegular.Edit}" 
+                                                Size="15"/>
                                         </Button.ImageSource>
                                     </Button>
 
                                     <Button WidthRequest="28"
                                             BackgroundColor="{StaticResource LightDark}"
+                                            Command="{Binding BindingContext.DeleteExpenseCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                            CommandParameter="{Binding .}"
                                             HeightRequest="28">
                                         <Button.ImageSource>
                                             <FontImageSource  FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Delete}" Size="15"/>
