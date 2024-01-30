@@ -18,7 +18,6 @@
                             <SwipeItem Command="{Binding BindingContext.SwipedCommand, Source={x:Reference budgetsCollectionView}}"
                                    CommandParameter="{Binding .}"
                                    BackgroundColor="{StaticResource Primary}"
-                                    
                                    IconImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Delete}}"/>
                         </SwipeItems>
                     </SwipeView.LeftItems>

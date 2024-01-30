@@ -11,7 +11,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
     [QueryProperty(nameof(SelectedBudget), "selectedBudget")]
     public partial class SingleBudgetViewModel : ViewModelBase
     {
-
         private readonly IDialogueService _dialogueService;
         private readonly IExpenseService _expenseService;
         private readonly IBudgetService _budgetService;
@@ -31,7 +30,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private Expense _newExpense = new();
 
         [ObservableProperty]
-        private ObservableCollection<Expense> _expenses = [];
+        private ObservableCollection<Expense>? _expenses = null;
 
         [ObservableProperty]
         private double _wasted;
@@ -44,13 +43,17 @@ namespace EwalletMobileApp.MVVM.ViewModels
             {
                 _selectedBudget = value;
                 NewExpense.BudgetID = value.ID;
-                Task.Run(async () => await LoadExpenses(_selectedBudget));
+                if (Expenses is null)
+                {
+                    Task.Run(async () => await LoadExpenses(_selectedBudget));
+                }
                 OnPropertyChanged(nameof(SelectedBudget));
             }
         }
 
         private async Task LoadExpenses(Budget budget)
         {
+            Expenses = [];
             if (budget is not null)
             {
                 var requiredExpenses = await _expenseService.GetAll(budget.ID, CancellationToken.None);
@@ -99,6 +102,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private async Task UpdateBudget()
         {
             await _budgetService.Update(SelectedBudget, CancellationToken.None);
+            OnPropertyChanged(nameof(SelectedBudget));
         }
 
         [RelayCommand]
