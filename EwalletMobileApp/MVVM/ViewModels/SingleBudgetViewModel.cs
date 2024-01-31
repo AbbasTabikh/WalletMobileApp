@@ -30,10 +30,15 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private Expense _newExpense = new();
 
         [ObservableProperty]
+        private Expense? _selectedExpense;
+
+        [ObservableProperty]
         private ObservableCollection<Expense>? _expenses = null;
 
         [ObservableProperty]
         private double _wasted;
+
+        private double _oldPrice;
 
         private Budget _selectedBudget;
         public Budget SelectedBudget
@@ -87,14 +92,14 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             await _expenseService.Create(NewExpense);
             UpdateWastedText(NewExpense.Price);
-            Expenses.Add(NewExpense);
+            Expenses?.Add(NewExpense);
         }
 
         [RelayCommand]
         private async Task DeleteExpense(Expense expense)
         {
             await _expenseService.Delete(expense);
-            Expenses.Remove(expense);
+            Expenses?.Remove(expense);
             UpdateWastedText(-expense.Price);
         }
 
@@ -103,6 +108,22 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             await _budgetService.Update(SelectedBudget, CancellationToken.None);
             OnPropertyChanged(nameof(SelectedBudget));
+        }
+
+        [RelayCommand]
+        private async Task OpenEditExpenseDialogue(Expense expense)
+        {
+            SelectedExpense = expense;
+            _oldPrice = expense.Price;
+            var dialogue = DialogueFactory.CreateInstance<EditExpenseDialogue, SingleBudgetViewModel>(this);
+            await _dialogueService.Open(dialogue);
+        }
+
+        [RelayCommand]
+        private async Task UpdateExpense()
+        {
+            await _expenseService.Update(SelectedExpense!, CancellationToken.None);
+            Wasted = (Wasted - _oldPrice) + SelectedExpense!.Price;
         }
 
         [RelayCommand]

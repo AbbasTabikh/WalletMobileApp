@@ -96,6 +96,9 @@
 	  <MauiXaml Update="MVVM\Views\EditBudgetDialogue.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\EditExpenseDialogue.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\ExpenseDialogue.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
