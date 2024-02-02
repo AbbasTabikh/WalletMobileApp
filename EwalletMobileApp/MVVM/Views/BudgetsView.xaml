@@ -12,7 +12,7 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="budgetCollectionView">
             <Grid ColumnDefinitions="*,*" >
-                <SwipeView Grid.ColumnSpan="2">
+                <SwipeView Grid.ColumnSpan="3">
                     <SwipeView.LeftItems>
                         <SwipeItems Mode="Execute">
                             <SwipeItem Command="{Binding BindingContext.SwipedCommand, Source={x:Reference budgetsCollectionView}}"
@@ -22,10 +22,10 @@
                         </SwipeItems>
                     </SwipeView.LeftItems>
                     <Frame BackgroundColor="Transparent" 
-                           Margin="0,10,0,10"
+                           Margin="0,6,0,6"
                            BorderColor="{StaticResource Primary}"
-                           HeightRequest="40" 
-                           CornerRadius="5">
+                           HeightRequest="45" 
+                           CornerRadius="10">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
@@ -42,16 +42,17 @@
                        Margin="12" 
                        ZIndex="-1"
                        TextColor="White" 
-                       FontSize="15" 
+                       FontSize="16"
                        Grid.Column="0"/>
-                <Label Text="{Binding Total}" 
+                <Label Text="{Binding Total, StringFormat='${0:F2}'}" 
                        HorizontalTextAlignment="End" 
+                       FontSize="16"
                        FontAttributes="Bold" 
                        VerticalTextAlignment="Center" 
                        Margin="15" 
                        ZIndex="-1"
-                       TextColor="White" 
-                       FontSize="12" Grid.Column="1"/>
+                       TextColor="{StaticResource Light}" 
+                       Grid.Column="1"/>
 
             </Grid>
         </DataTemplate>
@@ -71,13 +72,20 @@
 
     <Grid x:Name="Container" BackgroundColor="{StaticResource BgColor}">
         <Grid.RowDefinitions>
-            <RowDefinition Height=".3*" />
-            <RowDefinition Height=".6*" />
-            <RowDefinition Height=".1*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <Image Grid.Row="0" Source="top_bg.png" Aspect="Fill"/>
-
+        <!--<Image Source="top_bg.png"
+               Aspect="AspectFill"
+               Margin="0,-5,0,0"/>-->
+        <Border 
+            Grid.Row="0"
+            MinimumHeightRequest="230"
+            BackgroundColor="{StaticResource soft}"
+            StrokeShape="RoundRectangle 0,0,20,20">
+        </Border>
         <Grid Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -89,7 +97,7 @@
                     <Image Source="star.png" HeightRequest="35"></Image>
                     <VerticalStackLayout HorizontalOptions="Center">
                         <Label Text="Welcome back!" FontSize="10"></Label>
-                        <Label Text="Hussein Attar"></Label>
+                        <Label Text="Test Test"></Label>
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
 
@@ -104,46 +112,36 @@
         </Grid>
 
         <acrylic:AcrylicView Grid.Row="1" 
-                             Grid.RowSpan="2" 
-                             Margin="35,-75,35,0" 
+                             Margin="15,-85,15,0" 
                              EffectStyle="Custom" 
-                             TintOpacity="0.3" 
-                             Padding="25"
-                             CornerRadius="12"
+                             TintOpacity="0.5" 
+                             CornerRadius="15"
                              TintColor="#232629">
             <Grid RowDefinitions="auto,auto,auto,*" ColumnDefinitions="auto,*" HorizontalOptions="Center" Padding="25">
                 <Label Text="budget A" Grid.Row="0" Grid.Column="0" TextColor="White" FontAttributes="Bold"/>
                 <Label Text="20.00$" Grid.Row="1" FontSize="22" Grid.Column="0" FontAttributes="Bold" TextColor="White"/>
 
                 <Button Style="{StaticResource GlowingCircularButton}"
+                    Command="{Binding ToggleBudgetBottomSheetCommand}"
                     Grid.Column="1" 
                     Grid.Row="0" 
-                    Command="{Binding ToggleBudgetBottomSheetCommand}"
                     Grid.RowSpan="2" 
                     VerticalOptions="Center"
                     HorizontalOptions="End">
                     <Button.Shadow>
-                        <Shadow Brush="{StaticResource Primary}" Offset="0,0" Radius="45" Opacity="0.9" />
+                        <Shadow Brush="{StaticResource Primary}" Offset="1,1" Radius="55" Opacity="0.6" />
                     </Button.Shadow>
                     <Button.ImageSource>
                         <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Add}" Size="22"/>
                     </Button.ImageSource>
                 </Button>
 
-                <Label Text="List of budgets:" 
+                <Label Text="List of Budgets:" 
                        TextColor="White" 
                        Grid.Row="2" 
                        FontAttributes="Bold"
                        Margin="0,25,0,10"/>
                 
-                <Label  HorizontalTextAlignment="End" 
-                        HorizontalOptions="End" 
-                        FontFamily="icomoon"
-                        VerticalTextAlignment="Center"
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        Margin="0,25,5,10"/>
-
                 <ScrollView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center">
                     <CollectionView x:Name="budgetsCollectionView" ItemTemplate="{StaticResource budgetCollectionView}" 
                             ItemsSource="{Binding Budgets}"

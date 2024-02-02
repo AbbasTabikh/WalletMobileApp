@@ -4,6 +4,7 @@
              x:Class="EwalletMobileApp.MVVM.Views.SingleBudgetView"
              xmlns:viewModels="clr-namespace:EwalletMobileApp.MVVM.ViewModels"
              xmlns:acrylic="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
+             xmlns:enums="clr-namespace:EwalletMobileApp.Enums"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:helpers="clr-namespace:EwalletMobileApp.Helpers">
     <ContentPage.Resources>
@@ -49,11 +50,22 @@
                              CornerRadius="12"
                              TintColor="#232629">
             <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Padding="25">
-                <Label  Text="{Binding SelectedBudget.Name}"  Grid.Row="0" Grid.Column="0" TextColor="White" FontAttributes="Bold"/>
+                <Label  Text="{Binding SelectedBudget.Name}"  
+                        Grid.Row="0" 
+                        Grid.Column="0"
+                        FontSize="22"
+                        Margin="0,0,0,1"
+                        TextColor="White" />
                 <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
-                    <Label Text="{Binding Wasted}" FontSize="22" FontAttributes="Bold" TextColor="White"/>
-                    <Label Text="/" FontSize="22" TextColor="White"/>
-                    <Label Text="{Binding SelectedBudget.Total}" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="{Binding Wasted, StringFormat='${0:F2}'}" FontSize="16" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text=" / " 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           TextColor="White"/>
+                    <Label Text="{Binding SelectedBudget.Total, StringFormat='{0:F2}$'}" 
+                           FontSize="16"
+                           FontAttributes="Bold" 
+                           TextColor="White"/>
                 </HorizontalStackLayout>
                 <Button Style="{StaticResource GlowingCircularButton}"
                     Grid.Column="1" 
@@ -74,9 +86,29 @@
                 </Button>
             </Grid>
         </acrylic:AcrylicView>
-        <HorizontalStackLayout Grid.Row="2"  Margin="10,10,0,0" VerticalOptions="Center">
-            <Label Text="Expenses:" TextColor="White"/>
-            <Frame BackgroundColor="{StaticResource Primary}"
+        <HorizontalStackLayout Grid.Row="2"  Margin="35,10,0,0" VerticalOptions="Center">
+            <Label Text="Expenses" 
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   TextColor="White"/>
+            
+            <Button WidthRequest="20"
+              BackgroundColor="{StaticResource Dark}"
+              HeightRequest="20"
+              Margin="5,0,0,0"
+              CornerRadius="3"
+              Background="{StaticResource Primary}"
+              Command="{Binding OpenDialogueCommand}"
+              CommandParameter="{Binding .}">
+                <Button.ImageSource>
+                    <FontImageSource 
+                      FontFamily="MaterialRegular" 
+                      Glyph="{x:Static m:MaterialOutlined.Add}"
+                      Color="{StaticResource soft}"
+                      Size="16"/>
+                </Button.ImageSource>
+            </Button>
+            <!--<Frame BackgroundColor="{StaticResource Primary}"
                    CornerRadius="3" 
                    BorderColor="Transparent"
                    WidthRequest="20" 
@@ -87,15 +119,18 @@
                         NumberOfTapsRequired="1" 
                         Command="{Binding OpenDialogueCommand}" />
                 </Frame.GestureRecognizers>
-                <Label FontFamily="icomoon" 
-                       Text="{x:Static helpers:IconFont.Plus2}"
+                <Label FontFamily="MaterialRegular" 
+                       Text="{x:Static  m:MaterialSharp.Add}"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        TextColor="White"
                        FontSize="15"/>
-            </Frame>
+            </Frame>-->
+            
+            
+            
         </HorizontalStackLayout>
-        <ScrollView Grid.Row="3" Margin="15,10,15,0" >
+        <ScrollView Grid.Row="3" Margin="30,10,30,0" >
             <CollectionView ItemsSource="{Binding Expenses}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -103,60 +138,169 @@
                             <Frame BackgroundColor="#232629"
                                    Grid.ColumnSpan="3"
                                    BorderColor="Transparent"
-                                   Margin="0,3,0,2"
-                                   HeightRequest="75"
-                                   CornerRadius="8"/>
+                                   Margin="0,4,0,4"
+                                   HeightRequest="85"
+                                   CornerRadius="10"/>
                             <Grid  Grid.Column="0" 
                                    VerticalOptions="Center" 
                                    ColumnDefinitions="auto,auto,auto" 
                                    RowDefinitions="auto,auto"
                                    Padding="5">
-                                <Image Source="star.png" 
+
+                                <Image  
                                        HeightRequest="35"  
                                        Grid.Row="0" 
                                        Margin="5,0,8,0"
                                        Grid.Column="0" 
-                                       Grid.RowSpan="2"/>
+                                       Grid.RowSpan="2">
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="MaterialRegular"
+                                                         Color="White"/>
+                                    </Image.Source>
+
+                                    <Image.Shadow>
+                                        <Shadow Offset="1,1" Brush="Blue" Opacity="0.8"/>
+                                    </Image.Shadow>
+                                    <Image.Triggers>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Food}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Fastfood}" Color="{StaticResource Primary}" FontFamily="MaterialRegular"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Shopping}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRound.Shopping_bag}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Transportation}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Train}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Entertainment}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Movie}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Savings}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Savings}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Health}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Health_and_safety}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Housing}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.House}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Education}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Book}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Utilities}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Solar_power}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Other}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Question_mark}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Image" Binding="{Binding Category}" Value="{x:Static enums:Category.Travel}">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource Glyph="{x:Static m:MaterialRegular.Airplane_ticket}" Color="{StaticResource Primary}" FontFamily="MaterialRegular" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+
+                                    </Image.Triggers>
+                                </Image>
+
                                 <Label Grid.Row="0" 
                                        Grid.Column="1" 
                                        Text="{Binding Name}" 
                                        TextColor="white"
                                        FontAttributes="Bold"
-                                       FontSize="15"/>
+                                       FontSize="18"/>
                                 <Label Grid.Row="1" 
                                        Grid.Column="1" 
-                                       Text="{Binding Category}"  
-                                       TextColor="white" 
-                                       FontSize="14"/>
+                                       Text="{Binding Category, StringFormat='Category: {0}'}"  
+                                       TextColor="{StaticResource Light}" 
+                                       FontSize="Small"/>
                             </Grid>
                             <Label Grid.Column="1" Text="{Binding Price, StringFormat='${0:F2}'}" 
                                    VerticalTextAlignment="Center"
-                                   Margin="55,10,0,0"
-                                   FontSize="18" 
+                                   Margin="20,0,0,0"
+                                   FontAttributes="Bold"
+                                   FontSize="15" 
                                    TextColor="white"/>
                             <HorizontalStackLayout Padding="0,10,5,0"  
                                                        Grid.Column="2"
+                                                       Spacing="2"
                                                        HorizontalOptions="End" 
                                                        VerticalOptions="Start">
-                                <Button WidthRequest="28"
-                                        BackgroundColor="{StaticResource LightDark}"
-                                        HeightRequest="28"
+                                <Button WidthRequest="20"
+                                        BackgroundColor="{StaticResource Dark}"
+                                        HeightRequest="20"
                                         Command="{Binding BindingContext.OpenEditExpenseDialogueCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
                                         CommandParameter="{Binding .}">
                                     <Button.ImageSource>
                                         <FontImageSource 
                                                 FontFamily="MaterialRegular" 
-                                                Glyph="{x:Static m:MaterialRegular.Edit}" 
-                                                Size="15"/>
+                                                Glyph="{x:Static m:MaterialOutlined.Edit}"
+                                                Color="{StaticResource soft}"
+                                                Size="13"/>
                                     </Button.ImageSource>
                                 </Button>
-                                <Button WidthRequest="28"
-                                            BackgroundColor="{StaticResource LightDark}"
+                                <Button WidthRequest="20"
+                                            BackgroundColor="{StaticResource Dark}"
                                             Command="{Binding BindingContext.DeleteExpenseCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
                                             CommandParameter="{Binding .}"
-                                            HeightRequest="28">
+                                            HeightRequest="20">
                                     <Button.ImageSource>
-                                        <FontImageSource  FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Delete}" Size="15"/>
+                                        <FontImageSource  FontFamily="MaterialRegular" 
+                                                          Glyph="{x:Static m:MaterialOutlined.Delete_outline}" 
+                                                          Color="{StaticResource soft}"
+                                                          Size="15"/>
                                     </Button.ImageSource>
                                 </Button>
                             </HorizontalStackLayout>

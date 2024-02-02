@@ -11,11 +11,11 @@
     <Color x:Key="Secondary">#bcbbf9</Color>
     <Color x:Key="Dark">#161616</Color>
     <Color x:Key="Light">#B4B4B4</Color>
-    <Color x:Key="LightDark">#363636</Color> 
+    <Color x:Key="LightDark">#363636</Color>
+    <Color x:Key="soft">#B7B6F8</Color> 
     
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
-    <!--<Color x:Key="Secondary">#DFD8F7</Color-->
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
 

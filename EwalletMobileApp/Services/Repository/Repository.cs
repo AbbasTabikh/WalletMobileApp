@@ -84,6 +84,5 @@ namespace EwalletMobileApp.Services.Repository
         {
             return await _asyncConnection.ExecuteAsync(query) > 0;
         }
-
     }
 }

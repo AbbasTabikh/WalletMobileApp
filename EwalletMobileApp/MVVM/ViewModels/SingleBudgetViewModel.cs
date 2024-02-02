@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EwalletMobileApp.MVVM.Models;
 using EwalletMobileApp.MVVM.Views;
@@ -14,6 +15,9 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private readonly IDialogueService _dialogueService;
         private readonly IExpenseService _expenseService;
         private readonly IBudgetService _budgetService;
+
+        private Popup? _currentOpenDialogue;
+
         public string[] Categories { get; } = ["Food",
             "Shopping",
             "Transportation",
@@ -93,6 +97,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
             await _expenseService.Create(NewExpense);
             UpdateWastedText(NewExpense.Price);
             Expenses?.Add(NewExpense);
+            ResetExpense();
         }
 
         [RelayCommand]
@@ -116,6 +121,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
             SelectedExpense = expense;
             _oldPrice = expense.Price;
             var dialogue = DialogueFactory.CreateInstance<EditExpenseDialogue, SingleBudgetViewModel>(this);
+            SetCurrentOpenDialogue(dialogue);
             await _dialogueService.Open(dialogue);
         }
 
@@ -124,6 +130,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             await _expenseService.Update(SelectedExpense!, CancellationToken.None);
             Wasted = (Wasted - _oldPrice) + SelectedExpense!.Price;
+            await CloseCurrentOpenDialogue();
         }
 
         [RelayCommand]
@@ -135,6 +142,22 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private void UpdateWastedText(double price)
         {
             Wasted += price;
+        }
+        private void SetCurrentOpenDialogue(Popup popup)
+        {
+            _currentOpenDialogue = popup;
+        }
+        private async Task CloseCurrentOpenDialogue()
+        {
+            await _dialogueService.Close(_currentOpenDialogue!);
+            _currentOpenDialogue = null;
+        }
+        private void ResetExpense()
+        {
+            NewExpense = new Expense
+            {
+                BudgetID = SelectedBudget.ID
+            };
         }
     }
 }
