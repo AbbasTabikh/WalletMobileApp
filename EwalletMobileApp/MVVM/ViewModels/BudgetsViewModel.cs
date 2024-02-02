@@ -37,14 +37,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
             _ = LoadRequiredBudgets();
         }
 
-        private async Task LoadRequiredBudgets()
-        {
-            var requiredBudgets = await _budgetService.Get(parameters, CancellationToken.None);
-            if (requiredBudgets is not null && requiredBudgets.Any())
-            {
-                Budgets = new ObservableCollection<Budget>(requiredBudgets);
-            }
-        }
 
         [RelayCommand]
         private async Task SelectionChanged(Budget selectedItem)
@@ -65,6 +57,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             await _budgetService.Create(NewBudget);
             Budgets.Add(NewBudget);
+            ResetBudget();
         }
 
         [RelayCommand]
@@ -91,6 +84,19 @@ namespace EwalletMobileApp.MVVM.ViewModels
             }
 
             IsSheetShownAlready = !IsSheetShownAlready;
+        }
+
+        private void ResetBudget()
+        {
+            NewBudget = new Budget();
+        }
+        private async Task LoadRequiredBudgets()
+        {
+            var requiredBudgets = await _budgetService.Get(parameters, CancellationToken.None);
+            if (requiredBudgets is not null && requiredBudgets.Any())
+            {
+                Budgets = new ObservableCollection<Budget>(requiredBudgets);
+            }
         }
     }
 }

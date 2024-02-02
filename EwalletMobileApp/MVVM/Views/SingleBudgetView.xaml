@@ -5,6 +5,8 @@
              xmlns:viewModels="clr-namespace:EwalletMobileApp.MVVM.ViewModels"
              xmlns:acrylic="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
              xmlns:enums="clr-namespace:EwalletMobileApp.Enums"
+             Shell.BackgroundColor="{StaticResource soft}"
+             Shell.NavBarHasShadow="False"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:helpers="clr-namespace:EwalletMobileApp.Helpers">
     <ContentPage.Resources>
@@ -14,18 +16,25 @@
             <Setter Property="WidthRequest" Value="40"/>
             <Setter Property="HeightRequest" Value="40"/>
             <Setter Property="CornerRadius" Value="50"/>
-            <Setter Property="FontAutoScalingEnabled" Value="True"/>
         </Style>
     </ContentPage.Resources>
 
-    <Grid BackgroundColor="Black" RowDefinitions="auto,auto,auto,*" >
-        <Image Grid.Row="0" Source="top_bg.png" Aspect="Center"/>
-        <Grid Grid.Row="0">
+    <Grid BackgroundColor="Black" RowDefinitions="auto,auto,auto,*,auto" >
+        <Border 
+            Grid.Row="0"
+            MinimumHeightRequest="180"
+            Margin="0,-5,0,0"
+            BackgroundColor="{StaticResource soft}"
+            StrokeShape="RoundRectangle 0,0,20,20">
+        </Border>
+
+        <!--<Grid Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                
                 <HorizontalStackLayout Grid.Row="0" HeightRequest="35" Grid.Column="0">
                     <Image Source="dotnet_bot.png" HeightRequest="35"></Image>
                     <VerticalStackLayout HorizontalOptions="Center">
@@ -33,6 +42,7 @@
                         <Label Text="Hussein Attar"></Label>
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
+                
                 <Button Background="Transparent" HorizontalOptions="End" Grid.Column="1">
                     <Button.ImageSource>
                         <FontImageSource
@@ -42,19 +52,19 @@
                     </Button.ImageSource>
                 </Button>
             </Grid>
-        </Grid>
+        </Grid>-->
         <acrylic:AcrylicView Grid.Row="1" 
-                             Margin="35,-75,35,0" 
+                             Margin="25,-75,25,0" 
                              EffectStyle="Custom" 
-                             TintOpacity="0.3" 
-                             CornerRadius="12"
+                             TintOpacity="0.5" 
+                             CornerRadius="15"
                              TintColor="#232629">
             <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Padding="25">
                 <Label  Text="{Binding SelectedBudget.Name}"  
                         Grid.Row="0" 
                         Grid.Column="0"
-                        FontSize="22"
-                        Margin="0,0,0,1"
+                        FontSize="18"
+                        Margin="0,0,0,3"
                         TextColor="White" />
                 <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
                     <Label Text="{Binding Wasted, StringFormat='${0:F2}'}" FontSize="16" FontAttributes="Bold" TextColor="White"/>

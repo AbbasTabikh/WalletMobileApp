@@ -5,9 +5,12 @@ namespace EwalletMobileApp.Services
 {
     public class DialogueService : IDialogueService
     {
-        public async Task Close(Popup popup)
+        public async Task Close(Popup? popup)
         {
-            await popup.CloseAsync();
+            if (popup is not null)
+            {
+                await popup.CloseAsync();
+            }
         }
         public async Task Open(Popup popup)
         {

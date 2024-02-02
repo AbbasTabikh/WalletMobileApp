@@ -6,7 +6,8 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              xmlns:converters="clr-namespace:EwalletMobileApp.Converters"
-             CanBeDismissedByTappingOutsideOfPopup="True">
+             CanBeDismissedByTappingOutsideOfPopup="True"
+             Color="Transparent">
 
     <toolkit:Popup.Resources>
         <converters:StringToEnumConverter x:Key="StringToEnumConverter" />
@@ -14,46 +15,59 @@
 
     <Border BackgroundColor="{StaticResource Dark}"
             Margin="15,0,15,0"
-            StrokeThickness="0"
-            MinimumWidthRequest="300" 
+            StrokeShape="RoundRectangle 20,20,20,20"
+            MinimumWidthRequest="300"
             HeightRequest="450">
         <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
             <Label Grid.Row="0" Text="Add Expense" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
 
             <VerticalStackLayout Grid.Row="1">
-                <Label Text="Name" Padding="3" 
-                   TextColor="{StaticResource Light}"/>
-                <Entry Placeholder="Name"
+                <Label Text="Name" 
+                       Padding="3" 
+                       TextColor="{StaticResource Light}"/>
+                
+                <material:TextField
+                   InputBackground="{StaticResource InputBgColor}"
+                   TextColor="{StaticResource InputTextColor}"
                    Text="{Binding NewExpense.Name}"
-                   TextColor="{StaticResource White}"  
-                   BackgroundColor="#191B1E" 
-                   PlaceholderColor="{StaticResource LightDark}"/>
+                   AccentColor="{StaticResource Primary}"
+                   BorderColor="Transparent"
+                   FontSize="16"/>
+
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="2">
-                <Label Text="Category" Padding="3" 
+                <Label Text="Price" 
+                   Padding="3" 
+                   TextColor="{StaticResource Light}"/>
+
+                <material:TextField
+                   InputBackground="{StaticResource InputBgColor}"
+                   TextColor="{StaticResource InputTextColor}"
+                   Icon="{FontImageSource FontFamily=MaterialRegular, 
+                          Glyph={x:Static m:MaterialRegular.Attach_money},
+                          Color={StaticResource LightDark}}"
+                   Text="{Binding NewExpense.Price}"
+                   AccentColor="{StaticResource Primary}"
+                   BorderColor="Transparent"
+                   FontSize="16"/>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="3">
+                <Label Text="Category" 
+                       Padding="3" 
                    TextColor="{StaticResource Light}"/>
                 <material:PickerField 
-                            Padding="3"
                             AllowClear="False"
+                            InputBackground="{StaticResource InputBgColor}"
+                            BorderColor="Transparent"
                             Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Category}}"
-                            BorderColor="{StaticResource LightDark}"
                             SelectedItem="{Binding NewExpense.Category, Mode=TwoWay, Converter={StaticResource StringToEnumConverter}}"
                             AccentColor="{StaticResource Light}"
                             TextColor="{StaticResource White}"
                             TitleColor="{StaticResource Light}"
                             ItemsSource="{Binding Categories}"/>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Row="3">
-                <Label Text="Price" 
-                   Padding="3" 
-                   TextColor="{StaticResource Light}"/>
-                <Entry Placeholder="Price" 
-                   TextColor="{StaticResource White}"
-                   Text="{Binding NewExpense.Price}"
-                   BackgroundColor="#191B1E" 
-                  PlaceholderColor="{StaticResource LightDark}"/>
             </VerticalStackLayout>
 
             <Button Text="Save"
@@ -62,7 +76,7 @@
                 Margin="0,5,0,5"
                 Command="{Binding AddExpenseCommand}"
                 Padding="5"
-                WidthRequest="220"
+                WidthRequest="200"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 BackgroundColor="{StaticResource Primary}" 

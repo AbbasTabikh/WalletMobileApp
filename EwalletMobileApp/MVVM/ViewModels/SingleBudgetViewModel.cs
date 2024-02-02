@@ -113,6 +113,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             await _budgetService.Update(SelectedBudget, CancellationToken.None);
             OnPropertyChanged(nameof(SelectedBudget));
+            await CloseCurrentOpenDialogue();
         }
 
         [RelayCommand]
@@ -137,6 +138,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private async Task OpenEditBudgetDialogue()
         {
             var dialogue = DialogueFactory.CreateInstance<EditBudgetDialogue, SingleBudgetViewModel>(this);
+            SetCurrentOpenDialogue(dialogue);
             await _dialogueService.Open(dialogue);
         }
         private void UpdateWastedText(double price)
@@ -149,7 +151,10 @@ namespace EwalletMobileApp.MVVM.ViewModels
         }
         private async Task CloseCurrentOpenDialogue()
         {
-            await _dialogueService.Close(_currentOpenDialogue!);
+            if (_currentOpenDialogue is not null)
+            {
+                await _dialogueService.Close(_currentOpenDialogue!);
+            }
             _currentOpenDialogue = null;
         }
         private void ResetExpense()

@@ -5,50 +5,61 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-             xmlns:converters="clr-namespace:EwalletMobileApp.Converters" 
+             xmlns:converters="clr-namespace:EwalletMobileApp.Converters"
+             Color="Transparent"
              CanBeDismissedByTappingOutsideOfPopup="True">
 
 
     <Border BackgroundColor="{StaticResource Dark}"
-            Margin="15,0,15,0"
-            StrokeThickness="0"
+            StrokeShape="RoundRectangle 20,20,20,20"
             MinimumWidthRequest="300" 
             HeightRequest="450">
         <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
-            <Label Grid.Row="0" Text="Add Expense" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
+            <Label Grid.Row="0" Text="Update Budget" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
             <VerticalStackLayout Grid.Row="1">
                 <Label Text="Name" Padding="3" 
                    TextColor="{StaticResource Light}"/>
-                <Entry Placeholder="Name"
-                   Text="{Binding SelectedBudget.Name, Mode=TwoWay}"
-                   TextColor="{StaticResource White}"  
-                   BackgroundColor="#191B1E" 
-                   PlaceholderColor="{StaticResource LightDark}"/>
+
+                <material:TextField
+                   InputBackground="{StaticResource InputBgColor}"
+                   TextColor="{StaticResource InputTextColor}"
+                   Text="{Binding SelectedBudget.Name}"
+                   AccentColor="{StaticResource Primary}"
+                   BorderColor="Transparent"
+                   FontSize="16"/>
+                
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="2">
-                <Label Text="Creation Date" Padding="3" 
-                   TextColor="{StaticResource Light}"/>
-                <material:DatePickerField 
-                            Padding="3"
-                            AllowClear="False"
-                            Date="{Binding SelectedBudget.CreationDate}"
-                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}"
-                            BorderColor="{StaticResource LightDark}"
-                            AccentColor="{StaticResource Primary}"
-                            TextColor="{StaticResource White}"
-                            TitleColor="{StaticResource Light}"/>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Row="3">
                 <Label Text="Total" 
                    Padding="3" 
                    TextColor="{StaticResource Light}"/>
-                <Entry Placeholder="Price" 
-                   TextColor="{StaticResource White}"
-                   Text="{Binding SelectedBudget.Total, Mode=TwoWay}"
-                   BackgroundColor="#191B1E" 
-                  PlaceholderColor="{StaticResource LightDark}"/>
+
+                <material:TextField
+                   InputBackground="{StaticResource InputBgColor}"
+                   TextColor="{StaticResource InputTextColor}"
+                   Icon="{FontImageSource FontFamily=MaterialRegular, 
+                          Glyph={x:Static m:MaterialRegular.Attach_money},
+                          Color={StaticResource Light}}"
+                   Text="{Binding SelectedBudget.Total}"
+                   AccentColor="{StaticResource Primary}"
+                   BorderColor="Transparent"
+                   FontSize="16"/>
+                
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="3">
+                <Label Text="Creation Date" Padding="3" 
+                   TextColor="{StaticResource Light}"/>
+                <material:DatePickerField 
+                            AllowClear="False"
+                            Date="{Binding SelectedBudget.CreationDate}"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}"
+                            BorderColor="Transparent"
+                            InputBackground="{StaticResource InputBgColor}"        
+                            AccentColor="{StaticResource Primary}"
+                            TextColor="{StaticResource White}"
+                            TitleColor="{StaticResource Light}"/>
             </VerticalStackLayout>
 
             <Button Text="Save"
@@ -57,7 +68,7 @@
                 Margin="0,5,0,5"
                 Command="{Binding UpdateBudgetCommand}"
                 Padding="5"
-                WidthRequest="220"
+                WidthRequest="200"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 BackgroundColor="{StaticResource Primary}" 
