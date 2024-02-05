@@ -37,7 +37,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
             _ = LoadRequiredBudgets();
         }
 
-
         [RelayCommand]
         private async Task SelectionChanged(Budget selectedItem)
         {
@@ -85,7 +84,6 @@ namespace EwalletMobileApp.MVVM.ViewModels
 
             IsSheetShownAlready = !IsSheetShownAlready;
         }
-
         private void ResetBudget()
         {
             NewBudget = new Budget();

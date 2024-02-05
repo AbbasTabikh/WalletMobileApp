@@ -42,6 +42,9 @@ namespace EwalletMobileApp.MVVM.ViewModels
         [ObservableProperty]
         private double _wasted;
 
+        [ObservableProperty]
+        private double _available = 0;
+
         private double _oldPrice;
 
         private Budget _selectedBudget;
@@ -70,6 +73,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
                 {
                     Expenses = new ObservableCollection<Expense>(requiredExpenses);
                     Wasted = Expenses.Sum(x => x.Price);
+                    Available = SelectedBudget.Total - Wasted;
                 }
             }
         }
@@ -97,6 +101,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
             await _expenseService.Create(NewExpense);
             UpdateWastedText(NewExpense.Price);
             Expenses?.Add(NewExpense);
+            UpdateAvailableValue(NewExpense.Price, false);
             ResetExpense();
         }
 
@@ -144,6 +149,18 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private void UpdateWastedText(double price)
         {
             Wasted += price;
+        }
+        private void UpdateAvailableValue(double value, bool isExpenseDeleted)
+        {
+            if (isExpenseDeleted)
+            {
+                Available += value;
+                OnPropertyChanged(nameof(Available));
+            }
+            else
+            {
+                Available -= value;
+            }
         }
         private void SetCurrentOpenDialogue(Popup popup)
         {

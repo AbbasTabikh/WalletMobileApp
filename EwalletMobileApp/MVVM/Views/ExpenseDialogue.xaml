@@ -5,6 +5,9 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:validators="clr-namespace:EwalletMobileApp.Validations"
              xmlns:converters="clr-namespace:EwalletMobileApp.Converters"
              CanBeDismissedByTappingOutsideOfPopup="True"
              Color="Transparent">
@@ -18,30 +21,33 @@
             StrokeShape="RoundRectangle 20,20,20,20"
             MinimumWidthRequest="300"
             HeightRequest="450">
-        <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
-            <Label Grid.Row="0" Text="Add Expense" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
+        <input:FormView SubmitCommand="{Binding AddExpenseCommand}">
 
-            <VerticalStackLayout Grid.Row="1">
-                <Label Text="Name" 
+            <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
+                <Label Grid.Row="0" Text="Add Expense" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
+
+                <VerticalStackLayout Grid.Row="1">
+                    <Label Text="Name" 
                        Padding="3" 
                        TextColor="{StaticResource Light}"/>
-                
-                <material:TextField
+
+                    <material:TextField
                    InputBackground="{StaticResource InputBgColor}"
                    TextColor="{StaticResource InputTextColor}"
                    Text="{Binding NewExpense.Name}"
                    AccentColor="{StaticResource Primary}"
                    BorderColor="Transparent"
-                   FontSize="16"/>
+                   FontSize="16">
+                        <validation:RequiredValidation Message="Name is required"/>
+                    </material:TextField>
 
-            </VerticalStackLayout>
+                </VerticalStackLayout>
 
-            <VerticalStackLayout Grid.Row="2">
-                <Label Text="Price" 
+                <VerticalStackLayout Grid.Row="2">
+                    <Label Text="Price" 
                    Padding="3" 
                    TextColor="{StaticResource Light}"/>
-
-                <material:TextField
+                    <material:TextField
                    InputBackground="{StaticResource InputBgColor}"
                    TextColor="{StaticResource InputTextColor}"
                    Icon="{FontImageSource FontFamily=MaterialRegular, 
@@ -50,15 +56,18 @@
                    Text="{Binding NewExpense.Price}"
                    AccentColor="{StaticResource Primary}"
                    BorderColor="Transparent"
-                   FontSize="16"/>
+                   FontSize="16">
+                        <validation:NumericValidation Message="Only numbers are accepted"/>
+                    </material:TextField>
+                    
+                </VerticalStackLayout>
 
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Row="3">
-                <Label Text="Category" 
+                <VerticalStackLayout Grid.Row="3">
+                    <Label 
+                       Text="Category" 
                        Padding="3" 
                    TextColor="{StaticResource Light}"/>
-                <material:PickerField 
+                    <material:PickerField 
                             AllowClear="False"
                             InputBackground="{StaticResource InputBgColor}"
                             BorderColor="Transparent"
@@ -67,22 +76,27 @@
                             AccentColor="{StaticResource Light}"
                             TextColor="{StaticResource White}"
                             TitleColor="{StaticResource Light}"
-                            ItemsSource="{Binding Categories}"/>
-            </VerticalStackLayout>
+                            ItemsSource="{Binding Categories}">
+                        <validation:RequiredValidation Message="Category is required"/>
+                    </material:PickerField>
+                </VerticalStackLayout>
 
-            <Button Text="Save"
+                <Button Text="Save"
                 Grid.Row="4"
                 CornerRadius="5" 
                 Margin="0,5,0,5"
-                Command="{Binding AddExpenseCommand}"
                 Padding="5"
+                input:FormView.IsSubmitButton="True"
                 WidthRequest="200"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 BackgroundColor="{StaticResource Primary}" 
                 TextColor="White"/>
 
-        </Grid>
+            </Grid>
+
+        </input:FormView>
+
     </Border>
 
 

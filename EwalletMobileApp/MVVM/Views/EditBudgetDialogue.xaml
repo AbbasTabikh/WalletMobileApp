@@ -5,6 +5,8 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:converters="clr-namespace:EwalletMobileApp.Converters"
              Color="Transparent"
              CanBeDismissedByTappingOutsideOfPopup="True">
@@ -14,28 +16,33 @@
             StrokeShape="RoundRectangle 20,20,20,20"
             MinimumWidthRequest="300" 
             HeightRequest="450">
-        <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
-            <Label Grid.Row="0" Text="Update Budget" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
-            <VerticalStackLayout Grid.Row="1">
-                <Label Text="Name" Padding="3" 
+
+        <input:FormView SubmitCommand="{Binding UpdateBudgetCommand}">
+            <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
+                <Label Grid.Row="0" Text="Update Budget" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
+                <VerticalStackLayout Grid.Row="1">
+                    <Label Text="Name" Padding="3" 
                    TextColor="{StaticResource Light}"/>
 
-                <material:TextField
-                   InputBackground="{StaticResource InputBgColor}"
-                   TextColor="{StaticResource InputTextColor}"
-                   Text="{Binding SelectedBudget.Name}"
-                   AccentColor="{StaticResource Primary}"
-                   BorderColor="Transparent"
-                   FontSize="16"/>
-                
-            </VerticalStackLayout>
+                    <material:TextField
+                    InputBackground="{StaticResource InputBgColor}"
+                    TextColor="{StaticResource InputTextColor}"
+                    Text="{Binding SelectedBudget.Name}"
+                    AccentColor="{StaticResource Primary}"
+                    BorderColor="Transparent"
+                    FontSize="16">
+                        <validation:RequiredValidation Message="Name is required"/>
+                    </material:TextField>
 
-            <VerticalStackLayout Grid.Row="2">
-                <Label Text="Total" 
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Label 
+                   Text="Total" 
                    Padding="3" 
                    TextColor="{StaticResource Light}"/>
 
-                <material:TextField
+                    <material:TextField
                    InputBackground="{StaticResource InputBgColor}"
                    TextColor="{StaticResource InputTextColor}"
                    Icon="{FontImageSource FontFamily=MaterialRegular, 
@@ -44,14 +51,17 @@
                    Text="{Binding SelectedBudget.Total}"
                    AccentColor="{StaticResource Primary}"
                    BorderColor="Transparent"
-                   FontSize="16"/>
-                
-            </VerticalStackLayout>
+                   FontSize="16">
+                        <validation:NumericValidation Message="Only numbers are accepted"/>
 
-            <VerticalStackLayout Grid.Row="3">
-                <Label Text="Creation Date" Padding="3" 
+                    </material:TextField>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="3">
+                    <Label Text="Creation Date" Padding="3" 
                    TextColor="{StaticResource Light}"/>
-                <material:DatePickerField 
+                    <material:DatePickerField 
                             AllowClear="False"
                             Date="{Binding SelectedBudget.CreationDate}"
                             Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}"
@@ -60,21 +70,22 @@
                             AccentColor="{StaticResource Primary}"
                             TextColor="{StaticResource White}"
                             TitleColor="{StaticResource Light}"/>
-            </VerticalStackLayout>
+                </VerticalStackLayout>
 
-            <Button Text="Save"
+                <Button Text="Save"
                 Grid.Row="4"
                 CornerRadius="5" 
                 Margin="0,5,0,5"
-                Command="{Binding UpdateBudgetCommand}"
                 Padding="5"
                 WidthRequest="200"
+                input:FormView.IsSubmitButton="True"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 BackgroundColor="{StaticResource Primary}" 
                 TextColor="White"/>
 
-        </Grid>
+            </Grid>
+        </input:FormView>
     </Border>
 
 

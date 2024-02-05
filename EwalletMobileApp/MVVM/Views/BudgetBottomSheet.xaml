@@ -4,6 +4,8 @@
              xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              x:Class="EwalletMobileApp.MVVM.Views.BudgetBottomSheet"
              Background="{StaticResource BgColor}"
              CornerRadius="25"
@@ -31,10 +33,10 @@
         <Label Grid.Row="1" Text="Create Budget" FontAttributes="Bold" TextColor="White" FontSize="25"/>
         <Label Grid.Row="2" Text="How much do you want to top up?" TextColor="{StaticResource Light}" FontSize="18"/>
 
-        <VerticalStackLayout Grid.Row="3" Margin="0,15,0,0">
-            <Label Text="Name" TextColor="#B4B4B4" FontSize="20"/>
-
-            <material:TextField
+        <input:FormView SubmitCommand="{Binding CreateBudgetCommand}" Grid.Row="3">
+            <VerticalStackLayout Grid.Row="3" Margin="0,15,0,0">
+                <Label Text="Name" TextColor="#B4B4B4" FontSize="20"/>
+                <material:TextField
                 Margin="0,2,0,10"
                 InputBackground="{StaticResource InputBgColor}"
                 BorderColor="Transparent"
@@ -42,14 +44,15 @@
                 FontSize="16"
                 Text="{Binding NewBudget.Name}"
                 InputBackgroundColor="Transparent"
-                AccentColor="{StaticResource Primary}"/>
+                AccentColor="{StaticResource Primary}">
+                    <validation:RequiredValidation Message="Name field is required"/>
+                </material:TextField>
 
-        </VerticalStackLayout>
-        
-        <VerticalStackLayout Grid.Row="4" >
-            <Label Text="Amount" TextColor="{StaticResource Light}" FontSize="20"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="4" >
+                <Label Text="Amount" TextColor="{StaticResource Light}" FontSize="20"/>
 
-            <material:TextField
+                <material:TextField
                 Icon="{FontImageSource FontFamily=MaterialRegular, 
                 Glyph={x:Static m:MaterialRegular.Attach_money}, 
                 Color= #363636 }"
@@ -60,63 +63,67 @@
                 FontSize="20"
                 Text="{Binding NewBudget.Total, Mode=TwoWay}"
                 InputBackgroundColor="Transparent"
-                AccentColor="{StaticResource Primary}"/>
+                AccentColor="{StaticResource Primary}">
+                    <validation:NumericValidation Message="Only numbers are accepted"/>
+                </material:TextField>
 
-        </VerticalStackLayout>
-        <FlexLayout Margin="0,5,0,15" 
+            </VerticalStackLayout>
+            <FlexLayout Margin="0,5,0,15" 
                     Grid.Row="5" 
                     Wrap="Wrap" >
-            <Button 
+                <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="0.5"
                     Text="$0.5"/>
-            <Button 
+                <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="2"
                     Text="$2.00"/>
-            <Button 
+                <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="5"
                     Text="$5.00"/>
-            <Button 
+                <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="50"
                     Text="$50.00"/>
-            <Button 
+                <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="250"
                     Text="$250.00"/>
-            <Button 
+                <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="500"
                     Text="$500.00"/>
-            <Button 
+                <Button 
                     StyleClass="FilledButton"
                     Style="{StaticResource BadgeButton}"
                     TextColor="White"
                     CommandParameter="1000"
                     Text="$1000.00"/>
-        </FlexLayout>
-        
-        <Button 
+            </FlexLayout>
+            <Button 
             Grid.Row="6"
             Margin="0,5,0,0" 
             CornerRadius="8"
-            Command="{Binding CreateBudgetCommand}"
-            BackgroundColor="{StaticResource Primary}" 
-            Text="Continue"/>
+            Text="Continue"
+            input:FormView.IsSubmitButton="True"
+            BackgroundColor="{StaticResource Primary}" />
+        </input:FormView>
+
+
     </Grid>
 
 </the49:BottomSheet>
