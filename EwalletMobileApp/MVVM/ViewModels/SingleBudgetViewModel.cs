@@ -17,6 +17,8 @@ namespace EwalletMobileApp.MVVM.ViewModels
         private readonly IBudgetService _budgetService;
 
         private Popup? _currentOpenDialogue;
+        private double _oldPrice;
+        private double _oldTotal;
 
         public string[] Categories { get; } = ["Food",
             "Shopping",
@@ -45,7 +47,9 @@ namespace EwalletMobileApp.MVVM.ViewModels
         [ObservableProperty]
         private double _available = 0;
 
-        private double _oldPrice;
+        [ObservableProperty]
+        private double _updateExpenseAvailable;
+
 
         private Budget _selectedBudget;
         public Budget SelectedBudget
@@ -63,9 +67,16 @@ namespace EwalletMobileApp.MVVM.ViewModels
             }
         }
 
+        [ObservableProperty]
+        private bool _isAmountErrorVisible;
+
+        [ObservableProperty]
+        private bool _isBudgetAmountErrorVisible;
+
         private async Task LoadExpenses(Budget budget)
         {
             Expenses = [];
+
             if (budget is not null)
             {
                 var requiredExpenses = await _expenseService.GetAll(budget.ID, CancellationToken.None);
@@ -73,8 +84,8 @@ namespace EwalletMobileApp.MVVM.ViewModels
                 {
                     Expenses = new ObservableCollection<Expense>(requiredExpenses);
                     Wasted = Expenses.Sum(x => x.Price);
-                    Available = SelectedBudget.Total - Wasted;
                 }
+                Available = SelectedBudget.Total - Wasted;
             }
         }
 
@@ -91,6 +102,7 @@ namespace EwalletMobileApp.MVVM.ViewModels
         [RelayCommand]
         private async Task OpenDialogue()
         {
+            IsAmountErrorVisible = false;
             var dialogue = DialogueFactory.CreateInstance<ExpenseDialogue, SingleBudgetViewModel>(this);
             await _dialogueService.Open(dialogue);
         }
@@ -98,10 +110,15 @@ namespace EwalletMobileApp.MVVM.ViewModels
         [RelayCommand]
         private async Task AddExpense()
         {
+            if (NewExpense.Price > Available)
+            {
+                SetAmountError(true);
+                return;
+            }
             await _expenseService.Create(NewExpense);
             UpdateWastedText(NewExpense.Price);
             Expenses?.Add(NewExpense);
-            UpdateAvailableValue(NewExpense.Price, false);
+            UpdateAvailableText(NewExpense.Price, false);
             ResetExpense();
         }
 
@@ -111,11 +128,18 @@ namespace EwalletMobileApp.MVVM.ViewModels
             await _expenseService.Delete(expense);
             Expenses?.Remove(expense);
             UpdateWastedText(-expense.Price);
+            UpdateAvailableText(expense.Price, true);
         }
 
         [RelayCommand]
         private async Task UpdateBudget()
         {
+            if (SelectedBudget.Total < Wasted)
+            {
+                SetBudgetAmountError(true);
+                SelectedBudget.Total = _oldTotal;
+                return;
+            }
             await _budgetService.Update(SelectedBudget, CancellationToken.None);
             OnPropertyChanged(nameof(SelectedBudget));
             await CloseCurrentOpenDialogue();
@@ -124,8 +148,10 @@ namespace EwalletMobileApp.MVVM.ViewModels
         [RelayCommand]
         private async Task OpenEditExpenseDialogue(Expense expense)
         {
+            SetAmountError(false);
             SelectedExpense = expense;
             _oldPrice = expense.Price;
+            UpdateExpenseAvailable = Available + _oldPrice;
             var dialogue = DialogueFactory.CreateInstance<EditExpenseDialogue, SingleBudgetViewModel>(this);
             SetCurrentOpenDialogue(dialogue);
             await _dialogueService.Open(dialogue);
@@ -134,14 +160,23 @@ namespace EwalletMobileApp.MVVM.ViewModels
         [RelayCommand]
         private async Task UpdateExpense()
         {
+            if (SelectedExpense?.Price > UpdateExpenseAvailable)
+            {
+                SetAmountError(true);
+                return;
+            }
             await _expenseService.Update(SelectedExpense!, CancellationToken.None);
             Wasted = (Wasted - _oldPrice) + SelectedExpense!.Price;
+            Available = (Available + _oldPrice) - SelectedExpense.Price;
+            UpdateExpenseAvailable = (UpdateExpenseAvailable + _oldPrice) - SelectedExpense.Price;
             await CloseCurrentOpenDialogue();
         }
 
         [RelayCommand]
         private async Task OpenEditBudgetDialogue()
         {
+            _oldTotal = SelectedBudget.Total;
+            SetBudgetAmountError(false);
             var dialogue = DialogueFactory.CreateInstance<EditBudgetDialogue, SingleBudgetViewModel>(this);
             SetCurrentOpenDialogue(dialogue);
             await _dialogueService.Open(dialogue);
@@ -150,12 +185,11 @@ namespace EwalletMobileApp.MVVM.ViewModels
         {
             Wasted += price;
         }
-        private void UpdateAvailableValue(double value, bool isExpenseDeleted)
+        private void UpdateAvailableText(double value, bool isExpenseDeleted)
         {
             if (isExpenseDeleted)
             {
                 Available += value;
-                OnPropertyChanged(nameof(Available));
             }
             else
             {
@@ -180,6 +214,14 @@ namespace EwalletMobileApp.MVVM.ViewModels
             {
                 BudgetID = SelectedBudget.ID
             };
+        }
+        private void SetAmountError(bool value)
+        {
+            IsAmountErrorVisible = value;
+        }
+        private void SetBudgetAmountError(bool value)
+        {
+            IsBudgetAmountErrorVisible = value;
         }
     }
 }

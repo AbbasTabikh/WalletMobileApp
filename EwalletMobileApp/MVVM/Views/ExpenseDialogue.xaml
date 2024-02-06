@@ -1,97 +1,134 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EwalletMobileApp.MVVM.Views.ExpenseDialogue"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
-             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
-             xmlns:validators="clr-namespace:EwalletMobileApp.Validations"
-             xmlns:converters="clr-namespace:EwalletMobileApp.Converters"
-             CanBeDismissedByTappingOutsideOfPopup="True"
-             Color="Transparent">
+<toolkit:Popup
+    x:Class="EwalletMobileApp.MVVM.Views.ExpenseDialogue"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:EwalletMobileApp.Converters"
+    xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+    xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+    xmlns:validators="clr-namespace:EwalletMobileApp.Validations"
+    CanBeDismissedByTappingOutsideOfPopup="True"
+    Color="Transparent">
 
     <toolkit:Popup.Resources>
         <converters:StringToEnumConverter x:Key="StringToEnumConverter" />
     </toolkit:Popup.Resources>
 
-    <Border BackgroundColor="{StaticResource Dark}"
-            Margin="15,0,15,0"
-            StrokeShape="RoundRectangle 20,20,20,20"
-            MinimumWidthRequest="300"
-            HeightRequest="450">
+    <Border
+        Margin="15,0,15,0"
+        BackgroundColor="{StaticResource Dark}"
+        HeightRequest="450"
+        MinimumWidthRequest="300"
+        StrokeShape="RoundRectangle 20,20,20,20">
         <input:FormView SubmitCommand="{Binding AddExpenseCommand}">
 
-            <Grid RowDefinitions="*,*,*,*,*" RowSpacing="5" Padding="12">
-                <Label Grid.Row="0" Text="Add Expense" TextColor="White" FontSize="20" FontAttributes="Bold" Margin="0,5,0,5"/>
+            <Grid
+                Padding="12"
+                RowDefinitions="*,*,*,*,*"
+                RowSpacing="5">
+                <Label
+                    Grid.Row="0"
+                    Margin="0,5,0,5"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Add Expense"
+                    TextColor="White" />
 
                 <VerticalStackLayout Grid.Row="1">
-                    <Label Text="Name" 
-                       Padding="3" 
-                       TextColor="{StaticResource Light}"/>
+                    <Label
+                        Padding="3"
+                        Text="Name"
+                        TextColor="{StaticResource Light}" />
 
                     <material:TextField
-                   InputBackground="{StaticResource InputBgColor}"
-                   TextColor="{StaticResource InputTextColor}"
-                   Text="{Binding NewExpense.Name}"
-                   AccentColor="{StaticResource Primary}"
-                   BorderColor="Transparent"
-                   FontSize="16">
-                        <validation:RequiredValidation Message="Name is required"/>
+                        AccentColor="{StaticResource Primary}"
+                        BorderColor="Transparent"
+                        FontSize="16"
+                        InputBackground="{StaticResource InputBgColor}"
+                        Text="{Binding NewExpense.Name}"
+                        TextColor="{StaticResource InputTextColor}">
+                        <validation:RequiredValidation Message="Name is required" />
                     </material:TextField>
 
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Row="2">
-                    <Label Text="Price" 
-                   Padding="3" 
-                   TextColor="{StaticResource Light}"/>
+                    <Label
+                        Padding="3"
+                        Text="Price"
+                        TextColor="{StaticResource Light}" />
+
+
                     <material:TextField
-                   InputBackground="{StaticResource InputBgColor}"
-                   TextColor="{StaticResource InputTextColor}"
-                   Icon="{FontImageSource FontFamily=MaterialRegular, 
-                          Glyph={x:Static m:MaterialRegular.Attach_money},
-                          Color={StaticResource LightDark}}"
-                   Text="{Binding NewExpense.Price}"
-                   AccentColor="{StaticResource Primary}"
-                   BorderColor="Transparent"
-                   FontSize="16">
-                        <validation:NumericValidation Message="Only numbers are accepted"/>
+                        AccentColor="{StaticResource Primary}"
+                        BorderColor="Transparent"
+                        FontSize="16"
+                        Icon="{FontImageSource FontFamily=MaterialRegular,
+                                               Glyph={x:Static m:MaterialRegular.Attach_money},
+                                               Color={StaticResource LightDark}}"
+                        InputBackground="{StaticResource InputBgColor}"
+                        Text="{Binding NewExpense.Price}"
+                        TextColor="{StaticResource InputTextColor}">
+                        <material:TextField.Attachments>
+                            <HorizontalStackLayout
+                                Margin="0,0,5,0"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontSize="22"
+                                    Text="/"
+                                    TextColor="{StaticResource Primary}" />
+                                <Label
+                                    FontSize="19"
+                                    Text="{Binding Available}"
+                                    TextColor="{StaticResource Primary}" />
+                            </HorizontalStackLayout>
+                        </material:TextField.Attachments>
+                        <validation:NumericValidation Message="Only numbers are accepted" />
                     </material:TextField>
-                    
+
+                    <Label
+                        IsVisible="{Binding IsAmountErrorVisible}"
+                        Text="Invalid amount"
+                        TextColor="#f2b8b5" />
+
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Row="3">
-                    <Label 
-                       Text="Category" 
-                       Padding="3" 
-                   TextColor="{StaticResource Light}"/>
-                    <material:PickerField 
-                            AllowClear="False"
-                            InputBackground="{StaticResource InputBgColor}"
-                            BorderColor="Transparent"
-                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Category}}"
-                            SelectedItem="{Binding NewExpense.Category, Mode=TwoWay, Converter={StaticResource StringToEnumConverter}}"
-                            AccentColor="{StaticResource Light}"
-                            TextColor="{StaticResource White}"
-                            TitleColor="{StaticResource Light}"
-                            ItemsSource="{Binding Categories}">
-                        <validation:RequiredValidation Message="Category is required"/>
+                    <Label
+                        Padding="3"
+                        Text="Category"
+                        TextColor="{StaticResource Light}" />
+                    <material:PickerField
+                        AccentColor="{StaticResource Light}"
+                        AllowClear="False"
+                        BorderColor="Transparent"
+                        Icon="{FontImageSource FontFamily=MaterialRegular,
+                                               Glyph={x:Static m:MaterialRegular.Category}}"
+                        InputBackground="{StaticResource InputBgColor}"
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding NewExpense.Category, Mode=TwoWay, Converter={StaticResource StringToEnumConverter}}"
+                        TextColor="{StaticResource White}"
+                        TitleColor="{StaticResource Light}">
+                        <validation:RequiredValidation Message="Category is required" />
                     </material:PickerField>
                 </VerticalStackLayout>
 
-                <Button Text="Save"
-                Grid.Row="4"
-                CornerRadius="5" 
-                Margin="0,5,0,5"
-                Padding="5"
-                input:FormView.IsSubmitButton="True"
-                WidthRequest="200"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                BackgroundColor="{StaticResource Primary}" 
-                TextColor="White"/>
+                <Button
+                    Grid.Row="4"
+                    Margin="0,5,0,5"
+                    Padding="5"
+                    input:FormView.IsSubmitButton="True"
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="5"
+                    HorizontalOptions="Center"
+                    Text="Save"
+                    TextColor="White"
+                    VerticalOptions="Center"
+                    WidthRequest="200" />
 
             </Grid>
 
